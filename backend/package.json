@@ -1,0 +1,18 @@
+{
+  "name": "casting-agency",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init": "pipenv run python init_data.py",
+    "server": "pipenv run flask run",
+    "db-init": "pipenv run flask db init",
+    "db-migrate": "pipenv run flask db migrate",
+    "db-upgrade": "pipenv run flask db upgrade",
+    "db-downgrade": "pipenv run flask db downgrade",
+    "test": "pipenv run nose2 -v -C"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
