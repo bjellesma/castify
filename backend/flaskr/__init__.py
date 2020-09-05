@@ -4,7 +4,7 @@
 
 from flask import Flask # main import for running server
 from flask_sqlalchemy import SQLAlchemy # database connection
-from flask_migrate import Migrate #database migrations
+
 from flask_cors import CORS # CRSF protection
 from models.models import setup_db
 # The following imports are necessary to get the database structure properly set
@@ -21,7 +21,6 @@ import logging # app logging
 def create_app(test_config=None):
 
     app = Flask(__name__)
-    
     setup_db(app)
     app.config.from_object('config')
     # TODO will it

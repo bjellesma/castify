@@ -68,7 +68,7 @@ DEBUG=True
 2. Use the instructions to set up a local development server
     1. Use the api documentation for more information on how to make requests to the endpoints.
 
-3. Once you've made any modifications using the Code Style Guide listed in the next section, run the code through unit tests using `npm run test`.
+3. Once you've made any modifications using the Code Style Guide listed in the next section, run the code through unit tests using `npm run test-full`.
     1. If you've written any new endpoints, please also write a new unit test for the endpoint.
     2. Please also pay attention to the code coverage as output and ensure that coverage is at least 80%
 4. When your code is passing the unit tests, please submit a pull request

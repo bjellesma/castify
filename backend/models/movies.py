@@ -9,7 +9,7 @@ class Movie(db.Model):
     __tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
     title=db.Column(db.String, nullable=False)
-    # release_date = db.Column(db.Datetime, nullable=False)
+    release_date = db.Column(db.DateTime, nullable=False)
     actors = db.relationship('Actor', secondary=movie_actor, backref='movie', lazy=True)
     genres = db.relationship('Genre', secondary=movie_genre, backref='movie', lazy=True)
 

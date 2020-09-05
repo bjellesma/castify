@@ -46,6 +46,14 @@ class MovieTestCase(unittest.TestCase):
             'title': 'test6'
         }
 
+        self.test_movie_error = {
+            "bad": "string"
+        }
+
+        self.test_movie_update = {
+            'title': 'test-update'
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -88,3 +96,22 @@ class MovieTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['movie_id'], 9)
+
+    def test_create_movie_error(self):
+        res = self.client().post(
+            '/api/movies',
+            data=json.dumps(self.test_movie_error),
+            headers=headers 
+        )
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 400)
+
+    def test_update_movie(self):
+        res = self.client().patch(
+            '/api/movies/9',
+            data=json.dumps(self.test_movie_update),
+            headers=headers 
+        )
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['title'], 'test-update')

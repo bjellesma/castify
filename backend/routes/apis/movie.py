@@ -78,3 +78,16 @@ def create_movie():
         "success": True,
         "movie_id": mid
     })
+
+@movie_routes.route('/api/movies/<int:movie_id>', methods=['PATCH'])
+@cross_origin()
+def update_movie(movie_id):
+    """Update a movie in a database
+
+    Args:
+        movie_id (int): id of the movie to be updated
+    """
+    movie = Movie.query.get(movie_id)
+    if not movie:
+        abort(404, description=f"No movie was found for id {movie_id}")
+    movie.title = title

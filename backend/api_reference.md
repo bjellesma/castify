@@ -35,3 +35,32 @@ If your contribution to the api involves making a change to the structure of the
 2. In a command line, navigate to `/backend` of this project.
 3. Run `npm run create-test` to generate a new `agency.psq` file.
     * **Note** This will overwrite the current `agency.psql` file which may make testing, and any planned contributions, unusable. Please only proceed if you understand the risks involved.
+
+# Creating database migration
+
+Database Migrations are used with Castify to make it easier to manage database versions. Any change to the database schema should use the following steps
+
+1. If no db migrations have been performed, if there is no `/backend/migrations` folder, run `npm run db-init` to create the migrations folder.
+2. Make a change to the database schema by editing one of the files in `/models`. For example, in the following code, we've added release date as a column to the movie database.
+
+```py
+class Movie(db.Model):
+    __tablename__ = 'movie'
+    id = db.Column(db.Integer, primary_key=True)
+    title=db.Column(db.String, nullable=False)
+    release_date = db.Column(db.DateTime, nullable=False)
+```
+
+3. Run `npm run db-migrate` to create a migration script in `/backend/migrations/alembic/versions`. Your output from the command will read as the following:
+
+```
+INFO  [alembic.autogenerate.compare] Detected added column 'movie.release_date'
+```
+
+Notice that running this command alone will not change the schema of the database yet. You can verify this by using a command line tool on your database.
+
+4. Run `npm run db-upgrade` to upgrade the database to the newest version.
+
+You can verify that the column was added by using a command line tool on your database.
+
+5. If the database changes were not as you expected, you can downgrade the database by run `npm run db-downgrade`
