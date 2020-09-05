@@ -10,7 +10,10 @@
     "db-migrate": "pipenv run flask db migrate",
     "db-upgrade": "pipenv run flask db upgrade",
     "db-downgrade": "pipenv run flask db downgrade",
-    "test": "pipenv run nose2 -v -C"
+    "create-test": "sudo -u postgres -i && pg_dump agency > agency.psql",
+    "test-db": "dropdb agency_test --if-exists && createdb agency_test && psql agency_test < agency.psql",
+    "test": "pipenv run nose2 -v -C",
+    "test-full": "npm run test-db && npm run test"
   },
   "keywords": [],
   "author": "",

@@ -12,6 +12,8 @@ flask-migrate = "*"
 flask-cors = "*"
 python-dotenv = "*"
 nose2 = "*"
+psycopg2 = "*"
+voluptuous = "*"
 
 [requires]
 python_version = "3.7"
