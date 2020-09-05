@@ -1,4 +1,6 @@
-# Casting Agency
+# Castify
+
+Castify is a backend API to help producers create movies by casting actors to movie. Authenticated producers will simply call endpoints to create movies and assign actors. It's. That. Simple.
 
 ## Getting Started
 
