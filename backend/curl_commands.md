@@ -19,3 +19,9 @@ The following is a list of curl commands that can be used to test an endpoint:
 |---|---|---|
 | GET | `/api/actors` | `curl -X get 127.0.0.1:5000/api/actors` |
 | POST | `/api/actors` | `curl -X post 127.0.0.1:5000/api/actors -d '{"name":"test","age":25,"gender":"male"}' -H "Content-Type: application/json"` |
+
+## Links
+
+| method | endpoint | command |
+|---|---|---|
+| POST | `/api/links/movie_actor` | `curl -X post 127.0.0.1:5000/api/links/movie_actor -d '{"movie_id":10,"actor_id":1}' -H "Content-Type: application/json"`

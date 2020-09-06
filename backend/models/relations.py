@@ -14,3 +14,6 @@ movie_genre = db.Table(
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True)
     
 )
+
+
+

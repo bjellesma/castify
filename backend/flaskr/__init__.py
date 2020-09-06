@@ -16,6 +16,7 @@ from routes.api import api_routes
 from routes.apis.movie import movie_routes
 from routes.apis.genre import genre_routes
 from routes.apis.actor import actor_routes
+from routes.apis.link import link_routes
 from routes.errors import error_routes
 
 #----------------------------------------------------------------------------#
@@ -36,6 +37,7 @@ def create_app(test_config=None):
     app.register_blueprint(genre_routes)
     app.register_blueprint(actor_routes)
     app.register_blueprint(error_routes)
+    app.register_blueprint(link_routes)
 
     @app.after_request
     def after_request(response):
