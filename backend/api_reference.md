@@ -64,3 +64,32 @@ Notice that running this command alone will not change the schema of the databas
 You can verify that the column was added by using a command line tool on your database.
 
 5. If the database changes were not as you expected, you can downgrade the database by run `npm run db-downgrade`
+
+# Generating JSON Web Tokens
+
+Most routes in Castify are non public and are only available to authenticated casting assistants, casting directors, and executive producers through the use of JSON Web Tokens (JWT). Because of this, unit tests will need valid JWTs to authenticate. JWTs also expire after a certain amount of time and will need to be refreshed. Specifically, JWTs for unit tests will be read from these fields as part of the `.env` file.
+
+```
+CASTING_ASSISTANT_JWT=
+CASTING_DIRECTOR_JWT=
+EXECUTIVE_PRODUCER_JWT=
+```
+
+You can generate new JWTs by using the following steps:
+
+1. In a web browser, go to `https://dev-cpb64ukj.us.auth0.com/authorize?audience=https://127.0.0.1:5000&response_type=token&client_id=caolVXfgEL9z2t67IMOhcl10alFoRDQs&redirect_uri=https://127.0.0.1:5000/login-results`
+  * You may need to clear the cache in your browser if you've previously logged in. 
+2. Login with an auth0 user. The table below shows the relationship between roles and the JWT that it will generate
+
+| Role | JWT |
+|---|---|
+| Casting Assistant | CASTING_ASSISTANT_JWT |
+| Casting Directory | CASTING_DIRECTOR_JWT |
+| Executive Producer | EXECUTIVE_PRODUCER_JWT |
+
+3. The URL you are redirected to will be something like `https://127.0.0.1:5000/login-results#access_token=<jwt>&expires_in=86400&token_type=Bearer`. The usable JWT will be `<jwt>`
+
+4. Define the string for `<jwt>` in your `.env` file for the role.
+  * For Example, if you login with an account with the Casting Assistant role, it will generate an access token that you can assign to `CASTING_ASSISTANT_JWT` in your `.env` file 
+
+Once all JWT definitions are made in your `.env` file, the tests should all be passing once again (or at least not failing with an unauthorized message).

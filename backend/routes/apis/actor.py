@@ -1,5 +1,6 @@
 from flask import Blueprint, request, abort, jsonify    
 from flask_cors import CORS, cross_origin
+from auth import requires_auth
 from routes.routing_functions import validate_against_api
 from models.actors import Actor
 from voluptuous import Schema, Required, Optional
@@ -15,6 +16,7 @@ actor_schema = Schema({
 })
 
 @actor_routes.route('/api/actors', methods=['GET'])
+@requires_auth('read:actors')
 @cross_origin()
 def read_all_actors():
     """Read all actors in database
@@ -27,7 +29,6 @@ def read_all_actors():
     """
     try:
         actors = Actor.query.all()
-        
     except Exception as err:
         abort(422, description=err)
     return jsonify({
@@ -37,8 +38,25 @@ def read_all_actors():
 
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['GET'])
+@requires_auth('read:actors')
 @cross_origin()
 def read_single_actor(actor_id):
+    """Read Single Actor from database
+
+    Args:
+        actor_id (int): id of actor
+
+    Returns:
+        JSON: {
+            success: true if call succeeded
+            actor: {
+                id: id of actor
+                name: name of actor
+                age: age of actor
+                gender: gender of actor
+            }
+        }
+    """
     actor = Actor.query.get(actor_id)
     if not actor:
         abort(404, description=f"No actor was found for id {actor_id}")
@@ -48,6 +66,7 @@ def read_single_actor(actor_id):
     })
 
 @actor_routes.route('/api/actors', methods=['POST'])
+@requires_auth('create:actors')
 @cross_origin()
 def create_actor():
     """Insert Actor into database if validation is passed
@@ -80,6 +99,7 @@ def create_actor():
     })
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['PATCH'])
+@requires_auth('update:actors')
 @cross_origin()
 def update_actor(actor_id):
     """Update a actor in a database
@@ -106,6 +126,7 @@ def update_actor(actor_id):
     })
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['Delete'])
+@requires_auth('delete:actors')
 @cross_origin()
 def delete_single_actor(actor_id):
     """delete single actor from the database

@@ -47,6 +47,7 @@ class Actor(db.Model):
         db.session.commit()
         return actor.id 
 
+    # The update method for the other models need to be fixed as well
     def update_actor(insert_data):
         """update actor object in database
 
@@ -65,9 +66,10 @@ class Actor(db.Model):
         actor = Actor.query.get(actor_id)
         if not actor:
             flask_abort(404, message=f"No actor was found for id {actor_id}")
-        actor.name = insert_data.get('name') if 'name' in insert_data else actor.name
-        actor.age = insert_data.get('age') if 'age' in insert_data else actor.age
-        actor.gender = insert_data.get('gender') if 'gender' in insert_data else actor.gender
+        actor.name = insert_data.get('name') if insert_data.get('name') else actor.name
+        actor.age = insert_data.get('age') if insert_data.get('age') else actor.age
+        actor.gender = insert_data.get('gender') if insert_data.get('gender') else actor.gender
+        db.session.commit()
         return actor
 
     def delete_actor(actor_id):

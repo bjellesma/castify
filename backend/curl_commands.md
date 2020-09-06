@@ -19,6 +19,7 @@ The following is a list of curl commands that can be used to test an endpoint:
 |---|---|---|
 | GET | `/api/actors` | `curl -X get 127.0.0.1:5000/api/actors` |
 | POST | `/api/actors` | `curl -X post 127.0.0.1:5000/api/actors -d '{"name":"test","age":25,"gender":"male"}' -H "Content-Type: application/json"` |
+| PATCH | `/api/actors/<id>` | `curl -X patch 127.0.0.1:5000/api/actors/1 -d '{"name":"test-update-2"}' -H "Content-Type: application/json"` |
 
 ## Links
 

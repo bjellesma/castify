@@ -1,5 +1,6 @@
 from flask import Blueprint, request, abort, jsonify    
 from flask_cors import CORS, cross_origin
+from auth import requires_auth
 from routes.routing_functions import validate_against_api
 from models.movies import Movie
 from voluptuous import Schema, Required
@@ -14,6 +15,7 @@ movie_schema = Schema({
 })
 
 @movie_routes.route('/api/movies', methods=['GET'])
+@requires_auth('read:movies')
 @cross_origin()
 def read_all_movies():
     """Read all movies in database
@@ -34,8 +36,9 @@ def read_all_movies():
         "movies": [movie.format() for movie in movies]
     })
 
-
+# TODO need docstring
 @movie_routes.route('/api/movies/<int:movie_id>', methods=['GET'])
+@requires_auth('read:movies')
 @cross_origin()
 def read_single_movie(movie_id):
     movie = Movie.query.get(movie_id)
@@ -47,6 +50,7 @@ def read_single_movie(movie_id):
     })
 
 @movie_routes.route('/api/movies', methods=['POST'])
+@requires_auth('create:movies')
 @cross_origin()
 def create_movie():
     """Insert Movie into database if validation is passed
@@ -76,6 +80,7 @@ def create_movie():
     })
 
 @movie_routes.route('/api/movies/<int:movie_id>', methods=['PATCH'])
+@requires_auth('update:movies')
 @cross_origin()
 def update_movie(movie_id):
     """Update a movie in a database
@@ -101,6 +106,7 @@ def update_movie(movie_id):
     })
 
 @movie_routes.route('/api/movies/<int:movie_id>', methods=['Delete'])
+@requires_auth('delete:movies')
 @cross_origin()
 def delete_single_movie(movie_id):
     """delete single movie from the database

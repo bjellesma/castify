@@ -1,7 +1,7 @@
 from flaskr import create_app
 import unittest
 import json
-from tests.test_agency import  headers
+from tests.test_agency import casting_assistant_headers, casting_director_headers, executive_producer_headers, public_headers
 from flask_sqlalchemy import SQLAlchemy
 from secure import TEST_CONNECT_STRING
 from models.models import setup_db
@@ -43,7 +43,7 @@ class MovieTestCase(unittest.TestCase):
         pass
 
     def test_read_all_movies(self):
-        res = self.client().get('/api/movies')
+        res = self.client().get('/api/movies',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -51,7 +51,7 @@ class MovieTestCase(unittest.TestCase):
 
     # TODO what if the id is not there
     def test_read_single_movie(self):
-        res = self.client().get('/api/movies/9')
+        res = self.client().get('/api/movies/9',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -59,7 +59,7 @@ class MovieTestCase(unittest.TestCase):
 
     # TODO what if the id is there
     def test_read_single_movie_error(self):
-        res = self.client().get('/api/movies/4004')
+        res = self.client().get('/api/movies/4004',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
@@ -69,7 +69,7 @@ class MovieTestCase(unittest.TestCase):
         res = self.client().post(
             '/api/movies',
             data=json.dumps(self.test_movie),
-            headers=headers 
+            headers=executive_producer_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
@@ -80,7 +80,7 @@ class MovieTestCase(unittest.TestCase):
         res = self.client().post(
             '/api/movies',
             data=json.dumps(self.test_movie_error),
-            headers=headers 
+            headers=executive_producer_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 400)
@@ -89,7 +89,7 @@ class MovieTestCase(unittest.TestCase):
         res = self.client().patch(
             '/api/movies/9',
             data=json.dumps(self.test_movie_update),
-            headers=headers 
+            headers=casting_director_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
@@ -99,17 +99,17 @@ class MovieTestCase(unittest.TestCase):
         res = self.client().patch(
             '/api/movies/9',
             data=json.dumps(self.test_movie_update_error),
-            headers=headers 
+            headers=casting_director_headers 
         )
         self.assertEqual(res.status_code, 400)
 
     def test_delete_single_movie(self):
-        res = self.client().delete('/api/movies/10')
+        res = self.client().delete('/api/movies/10', headers=executive_producer_headers)
         self.assertEqual(res.status_code, 200)
         # also test that this movie is now a 404
-        res = self.client().get('/api/movies/910')
+        res = self.client().get('/api/movies/10', headers=executive_producer_headers)
         self.assertEqual(res.status_code, 404)
 
     def test_delete_single_movie_error(self):
-        res = self.client().delete('/api/movies/9999')
+        res = self.client().delete('/api/movies/9999', headers=executive_producer_headers)
         self.assertEqual(res.status_code, 404)

@@ -1,7 +1,7 @@
 from flaskr import create_app
 import unittest
 import json
-from tests.test_agency import  headers
+from tests.test_agency import casting_assistant_headers, casting_director_headers
 from flask_sqlalchemy import SQLAlchemy
 from secure import TEST_CONNECT_STRING
 from models.models import setup_db
@@ -45,7 +45,7 @@ class ActorTestCase(unittest.TestCase):
         pass
 
     def test_read_all_actors(self):
-        res = self.client().get('/api/actors')
+        res = self.client().get('/api/actors',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -53,7 +53,7 @@ class ActorTestCase(unittest.TestCase):
 
     # TODO what if the id is not there
     def test_read_single_actor(self):
-        res = self.client().get('/api/actors/9')
+        res = self.client().get('/api/actors/9',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -61,7 +61,7 @@ class ActorTestCase(unittest.TestCase):
 
     # TODO what if the id is there
     def test_read_single_actor_error(self):
-        res = self.client().get('/api/actors/4004')
+        res = self.client().get('/api/actors/4004',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
@@ -71,7 +71,7 @@ class ActorTestCase(unittest.TestCase):
         res = self.client().post(
             '/api/actors',
             data=json.dumps(self.test_actor),
-            headers=headers 
+            headers=casting_director_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
@@ -82,7 +82,7 @@ class ActorTestCase(unittest.TestCase):
         res = self.client().post(
             '/api/actors',
             data=json.dumps(self.test_actor_error),
-            headers=headers 
+            headers=casting_director_headers 
         )
         self.assertEqual(res.status_code, 400)
 
@@ -90,7 +90,7 @@ class ActorTestCase(unittest.TestCase):
         res = self.client().patch(
             '/api/actors/9',
             data=json.dumps(self.test_actor_update),
-            headers=headers 
+            headers=casting_director_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
@@ -100,17 +100,17 @@ class ActorTestCase(unittest.TestCase):
         res = self.client().patch(
             '/api/actors/9',
             data=json.dumps(self.test_actor_update_error),
-            headers=headers 
+            headers=casting_director_headers 
         )
         self.assertEqual(res.status_code, 400)
 
     def test_delete_single_actor(self):
-        res = self.client().delete('/api/actors/10')
+        res = self.client().delete('/api/actors/10', headers=casting_director_headers)
         self.assertEqual(res.status_code, 200)
         # also test that this actor is now a 404
-        res = self.client().get('/api/actors/910')
+        res = self.client().get('/api/actors/10', headers=casting_director_headers)
         self.assertEqual(res.status_code, 404)
 
     def test_delete_single_actor_error(self):
-        res = self.client().delete('/api/actors/9999')
+        res = self.client().delete('/api/actors/9999', headers=casting_director_headers)
         self.assertEqual(res.status_code, 404)

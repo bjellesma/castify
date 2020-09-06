@@ -1,5 +1,6 @@
 from flask import Blueprint, request, abort, jsonify    
 from flask_cors import CORS, cross_origin
+from auth import requires_auth
 from routes.routing_functions import validate_against_api
 from models.genres import Genre
 from voluptuous import Schema, Required
@@ -13,6 +14,7 @@ genre_schema = Schema({
 })
 
 @genre_routes.route('/api/genres', methods=['GET'])
+@requires_auth('read:genres')
 @cross_origin()
 def read_all_genres():
     """Read all genres in database
@@ -33,8 +35,9 @@ def read_all_genres():
         "genres": [genre.format() for genre in genres]
     })
 
-
+# TODO need docstring
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['GET'])
+@requires_auth('read:genres')
 @cross_origin()
 def read_single_genre(genre_id):
     genre = Genre.query.get(genre_id)
@@ -46,6 +49,7 @@ def read_single_genre(genre_id):
     })
 
 @genre_routes.route('/api/genres', methods=['POST'])
+@requires_auth('create:genres')
 @cross_origin()
 def create_genre():
     """Insert Genre into database if validation is passed
@@ -73,6 +77,7 @@ def create_genre():
     })
 
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['PATCH'])
+@requires_auth('update:genres')
 @cross_origin()
 def update_genre(genre_id):
     """Update a genre in a database
@@ -97,6 +102,7 @@ def update_genre(genre_id):
     })
 
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['Delete'])
+@requires_auth('delete:genres')
 @cross_origin()
 def delete_single_genre(genre_id):
     """delete single genre from the database

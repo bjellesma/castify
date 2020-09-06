@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-
+from auth import AuthError
 error_routes = Blueprint('error_handlers', __name__)
     
 @error_routes.app_errorhandler(400)
@@ -41,8 +41,16 @@ def not_found(error):
 @error_routes.app_errorhandler(500)
 def not_found(error):
     return jsonify({
-    "success": False, 
-    "error": 500,
-    "message": "Internal Server Error",
-    "additional_information": error.description
+        "success": False, 
+        "error": 500,
+        "message": "Internal Server Error",
+        "additional_information": error.description
     }), 500
+
+@error_routes.app_errorhandler(AuthError)
+def auth_error(error):
+    return jsonify({
+        "success": False,
+        "error": error.status_code,
+        "message": error.error
+    }), error.status_code

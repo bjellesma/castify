@@ -3,8 +3,26 @@ import unittest
 from flask_sqlalchemy import SQLAlchemy
 from secure import TEST_CONNECT_STRING
 from models.models import setup_db
+from secure import CASTING_ASSISTANT_JWT, CASTING_DIRECTOR_JWT, EXECUTIVE_PRODUCER_JWT
 
-headers = {'Content-Type': 'application/json'}
+casting_assistant_headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {CASTING_ASSISTANT_JWT}'
+}
+
+casting_director_headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {CASTING_DIRECTOR_JWT}'
+}
+
+executive_producer_headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {EXECUTIVE_PRODUCER_JWT}'
+}
+
+public_headers = {
+    'Content-Type': 'application/json'
+}
 
 class AgencyTestCase(unittest.TestCase):
 
