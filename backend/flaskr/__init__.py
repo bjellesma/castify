@@ -12,7 +12,11 @@ from models.movies import *
 from models.actors import *
 from models.genres import *
 import logging # app logging
-
+from routes.api import api_routes
+from routes.apis.movie import movie_routes
+from routes.apis.genre import genre_routes
+from routes.apis.actor import actor_routes
+from routes.errors import error_routes
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -26,11 +30,11 @@ def create_app(test_config=None):
     # TODO will it
     # Necessary because our frontend connects with a different port
     CORS(app, resources={r"/api/*": {"origins": "*"}}) 
-    from routes.api import api_routes
-    from routes.apis.movie import movie_routes
-    from routes.errors import error_routes
+    
     app.register_blueprint(api_routes)
     app.register_blueprint(movie_routes)
+    app.register_blueprint(genre_routes)
+    app.register_blueprint(actor_routes)
     app.register_blueprint(error_routes)
 
     @app.after_request

@@ -1,8 +1,5 @@
-from platform import release
 from models.models import db
 from models.relations import movie_actor, movie_genre
-from models.actors import Actor
-from models.genres import Genre
 from routes.routing_functions import flask_abort
 
 

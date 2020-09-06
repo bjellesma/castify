@@ -53,8 +53,7 @@ CREATE TABLE public.actor (
     id integer NOT NULL,
     name character varying NOT NULL,
     age integer NOT NULL,
-    gender public.gender,
-    movie_id integer NOT NULL
+    gender public.gender
 );
 
 
@@ -208,7 +207,7 @@ ALTER TABLE ONLY public.movie ALTER COLUMN id SET DEFAULT nextval('public.movie_
 -- Data for Name: actor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.actor (id, name, age, gender, movie_id) FROM stdin;
+COPY public.actor (id, name, age, gender) FROM stdin;
 \.
 
 
@@ -224,7 +223,7 @@ SELECT pg_catalog.setval('public.actor_id_seq', 1, false);
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-ae593d942349
+5c8b99f6be7a
 \.
 
 
@@ -233,6 +232,7 @@ ae593d942349
 --
 
 COPY public.genre (id, name) FROM stdin;
+1	test-genre
 \.
 
 
@@ -240,7 +240,7 @@ COPY public.genre (id, name) FROM stdin;
 -- Name: genre_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.genre_id_seq', 1, false);
+SELECT pg_catalog.setval('public.genre_id_seq', 1, true);
 
 
 --
@@ -322,14 +322,6 @@ ALTER TABLE ONLY public.movie_genre
 
 ALTER TABLE ONLY public.movie
     ADD CONSTRAINT movie_pkey PRIMARY KEY (id);
-
-
---
--- Name: actor_movie_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.actor
-    ADD CONSTRAINT actor_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movie(id);
 
 
 --

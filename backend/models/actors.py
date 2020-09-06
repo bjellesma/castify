@@ -1,10 +1,10 @@
 from models.models import db
 import enum
-from models.relations import movie_actor
+from routes.routing_functions import flask_abort
 
 class Gender(enum.Enum):
-    male = "Male",
-    female = "Female"
+    male = "male",
+    female = "female"
 
 class Actor(db.Model):
     __tablename__ = 'actor'
@@ -12,6 +12,68 @@ class Actor(db.Model):
     name = db.Column(db.String, nullable=False)
     age=db.Column(db.Integer, nullable=False)
     gender=db.Column(db.Enum(Gender))
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    # actors = db.relationship('Actor', secondary=actor_movie, backref='actor', lazy=True)
     
+    def __init__(self, name, age, gender):
+        """
+        set class variables
+        """
+        self.name = name
+        self.age = age
+        self.gender = gender
+
+    def format(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'gender': str(self.gender)
+        }
+
+    def create_actor(name, age, gender):
+        """Create new actor
+
+        Args:
+            title (string): title of the actor
+
+        Returns:
+            int: the id of the actor inserted
+        """
+        actor = Actor(
+            name=name,
+            age=age,
+            gender=gender
+        )
+        db.session.add(actor)
+        db.session.commit()
+        return actor.id 
+
+    def update_actor(insert_data):
+        """update actor object in database
+
+        Args:
+            insert_data (dict): {
+                id: id of actor to updata
+                name: name to update, if applicable
+                age: age to update if applicable
+                gender: gender to update if applicable
+            }
+
+        Returns:
+            object: actor sqlalchemy object
+        """
+        actor_id = insert_data.get('id')
+        actor = Actor.query.get(actor_id)
+        if not actor:
+            flask_abort(404, message=f"No actor was found for id {actor_id}")
+        actor.name = insert_data.get('name') if 'name' in insert_data else actor.name
+        actor.age = insert_data.get('age') if 'age' in insert_data else actor.age
+        actor.gender = insert_data.get('gender') if 'gender' in insert_data else actor.gender
+        return actor
+
+    def delete_actor(actor_id):
+        actor = Actor.query.get(actor_id)
+        if not actor:
+            flask_abort(status_code=404, message=f"No actor was found for id {actor_id}")
+        db.session.delete(actor)
+        db.session.commit()
+        return actor.id

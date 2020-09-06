@@ -29,9 +29,6 @@ def read_all_movies():
         
     except Exception as err:
         abort(422, description=err)
-    # if there are no movies, then 404
-    if not movies:
-        abort(404, description="No movies have been found!")
     return jsonify({
         "success": True,
         "movies": [movie.format() for movie in movies]
