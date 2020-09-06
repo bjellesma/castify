@@ -43,7 +43,8 @@ class MovieTestCase(unittest.TestCase):
         setup_db(self.app, TEST_CONNECT_STRING)
 
         self.test_movie = {
-            'title': 'test6'
+            'title': 'test6',
+            'release_date': '2020-09-05 17:07:43'
         }
 
         self.test_movie_error = {
@@ -52,6 +53,10 @@ class MovieTestCase(unittest.TestCase):
 
         self.test_movie_update = {
             'title': 'test-update'
+        }
+
+        self.test_movie_update_error = {
+            'title': 4
         }
 
         # binds the app to the current context
@@ -72,13 +77,15 @@ class MovieTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertIsInstance(data['movies'], list)
 
+    # TODO what if the id is not there
     def test_read_single_movie(self):
-        res = self.client().get('/api/movies/4')
+        res = self.client().get('/api/movies/9')
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertIsInstance(data['movie'], dict)
 
+    # TODO what if the id is there
     def test_read_single_movie_error(self):
         res = self.client().get('/api/movies/4004')
         data = json.loads(res.data)
@@ -95,7 +102,7 @@ class MovieTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['movie_id'], 9)
+        self.assertIsInstance(data['movie_id'], int)
 
     def test_create_movie_error(self):
         res = self.client().post(
@@ -114,4 +121,23 @@ class MovieTestCase(unittest.TestCase):
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['title'], 'test-update')
+        self.assertEqual(data['movie']['title'], self.test_movie_update['title'])
+
+    def test_update_movie_error(self):
+        res = self.client().patch(
+            '/api/movies/9',
+            data=json.dumps(self.test_movie_update_error),
+            headers=headers 
+        )
+        self.assertEqual(res.status_code, 400)
+
+    def test_delete_single_movie(self):
+        res = self.client().delete('/api/movies/10')
+        self.assertEqual(res.status_code, 200)
+        # also test that this movie is now a 404
+        res = self.client().get('/api/movies/910')
+        self.assertEqual(res.status_code, 404)
+
+    def test_delete_single_movie_error(self):
+        res = self.client().delete('/api/movies/9999')
+        self.assertEqual(res.status_code, 404)
