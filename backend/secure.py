@@ -29,6 +29,7 @@ API_AUDIENCE=os.environ["API_AUDIENCE"]
 ALGORITHM=os.environ["ALGORITHM"]
 # Note that these JWTs are only used when performing unit tests
 # they are not needed when deployed
-CASTING_ASSISTANT_JWT=os.environ["CASTING_ASSISTANT_JWT"]
-CASTING_DIRECTOR_JWT=os.environ["CASTING_DIRECTOR_JWT"]
-EXECUTIVE_PRODUCER_JWT=os.environ["EXECUTIVE_PRODUCER_JWT"]
+if not str_to_bool(DEPLOY):
+    CASTING_ASSISTANT_JWT=os.environ["CASTING_ASSISTANT_JWT"]
+    CASTING_DIRECTOR_JWT=os.environ["CASTING_DIRECTOR_JWT"]
+    EXECUTIVE_PRODUCER_JWT=os.environ["EXECUTIVE_PRODUCER_JWT"]
