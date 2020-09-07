@@ -8,11 +8,11 @@ from functions import str_to_bool
 # App variables
 APP_DEBUG=os.environ["DEBUG"]
 DEPLOY=os.environ["DEPLOY"]
-
 # Database variables. only apploy if not deployed
 if str_to_bool(DEPLOY):
     CONNECT_STRING = os.environ["DATABASE_URL"]
 else:
+    
     DATABASE_TYPE=os.environ["DATABASE_TYPE"]
     DATABASE_HOST=os.environ["DATABASE_HOST"]
     DATABASE_PORT=os.environ["DATABASE_PORT"]
