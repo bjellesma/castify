@@ -114,6 +114,7 @@ def update_actor(actor_id):
     # if there are errors, abort with a 400
     if api_errors:
         abort(400, description=api_errors)
+        
     actor = Actor.update_actor({
         "id": actor_id,
         "name": data.get("name"),
