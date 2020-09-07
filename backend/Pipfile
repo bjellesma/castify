@@ -15,6 +15,7 @@ nose2 = "*"
 psycopg2 = "*"
 voluptuous = "*"
 python-jose = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
