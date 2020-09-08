@@ -1,4 +1,5 @@
 from flask import abort
+from voluptuous import DictInvalid
 
 def validate_against_api(data, schema, request, optional=False):
     """Validate data sent to an api endpoint
@@ -16,8 +17,11 @@ def validate_against_api(data, schema, request, optional=False):
     api_errors = []
     try:
         data = schema(data)
+    except DictInvalid as error:
+        api_errors.append(f'Data not understood. Did you sent request parameters instead of a JSON body?')
     except Exception as errors:
         for err in errors.errors:
+            print(f'error: {err}')
             if err.msg == "required key not provided":
                 if not optional:
                     api_errors.append(f'{err.path[0]} was required and not provided for call to {request.path} as {request.method}. Please consult the documentation for this endpoint.')

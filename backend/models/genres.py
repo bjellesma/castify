@@ -49,7 +49,8 @@ class Genre(db.Model):
         genre = Genre.query.get(genre_id)
         if not genre:
             flask_abort(404, message=f"No genre was found for id {genre_id}")
-        genre.name = insert_data.get('name') if 'name' in insert_data else genre.name
+        genre.name = insert_data.get('name') if insert_data.get('name') else genre.name
+        db.session.commit()
         return genre
 
     def delete_genre(genre_id):
