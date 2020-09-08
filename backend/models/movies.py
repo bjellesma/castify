@@ -58,8 +58,9 @@ class Movie(db.Model):
         movie = Movie.query.get(movie_id)
         if not movie:
             flask_abort(404, message=f"No movie was found for id {movie_id}")
-        movie.title = insert_data.get('title') if 'title' in insert_data else movie.title
-        movie.release_date = insert_data.get('release_date') if 'release_date' in insert_data else movie.release_date
+        movie.title = insert_data.get('title') if insert_data.get('title') else movie.title
+        movie.release_date = insert_data.get('release_date') if insert_data.get('release_date') else movie.release_date
+        db.session.commit()
         return movie
 
     def delete_movie(movie_id):
