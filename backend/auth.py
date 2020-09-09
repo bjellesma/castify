@@ -18,7 +18,6 @@ AuthError Exception
 A standardized way to communicate auth failure modes
 '''
 class AuthError(Exception):
-    # extra TODO return json
     def __init__(self, error, status_code, additional_information='No additional information is available'):
         self.error = error
         self.status_code = status_code

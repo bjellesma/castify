@@ -14,6 +14,10 @@ class GenreTestCase(unittest.TestCase):
         self.client = self.app.test_client
         setup_db(self.app, TEST_CONNECT_STRING)
 
+        self.test_genre_original = {
+            'name': 'soul'
+        }
+
         self.test_genre = {
             'name': 'punk'
         }
@@ -23,7 +27,7 @@ class GenreTestCase(unittest.TestCase):
         }
 
         self.test_genre_update = {
-            'name': 'genre-update'
+            'name': 'metal'
         }
 
         self.test_genre_update_error = {
@@ -48,15 +52,14 @@ class GenreTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertIsInstance(data['genres'], list)
 
-    # TODO what if the id is not there
     def test_read_single_genre(self):
-        res = self.client().get('/api/genres/9',headers=casting_assistant_headers)
+        res = self.client().get('/api/genres/1',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertIsInstance(data['genre'], dict)
+        self.assertEqual(data['genre']['name'], self.test_genre_original.get('name'))
 
-    # TODO what if the id is there
     def test_read_single_genre_error(self):
         res = self.client().get('/api/genres/4004',headers=casting_assistant_headers)
         data = json.loads(res.data)
@@ -85,27 +88,35 @@ class GenreTestCase(unittest.TestCase):
 
     def test_update_genre(self):
         res = self.client().patch(
-            '/api/genres/9',
+            '/api/genres/1',
             data=json.dumps(self.test_genre_update),
             headers=casting_director_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['genre']['name'], self.test_genre_update['name'])
+        # test that getting id 1 will result in the new name
+        res = self.client().get('/api/genres/1', headers=casting_director_headers)
+        data = json.loads(res.data)
+        self.assertEqual(data['genre']['name'], self.test_genre_update['name'])
 
     def test_update_genre_error(self):
         res = self.client().patch(
-            '/api/genres/9',
+            '/api/genres/1',
             data=json.dumps(self.test_genre_update_error),
             headers=casting_director_headers 
         )
         self.assertEqual(res.status_code, 400)
 
     def test_delete_single_genre(self):
-        res = self.client().delete('/api/genres/10', headers=casting_director_headers)
+        # First test that id 2 exists
+        res = self.client().get('/api/genres/2', headers=casting_director_headers)
         self.assertEqual(res.status_code, 200)
-        # also test that this genre is now a 404
-        res = self.client().get('/api/genres/10', headers=casting_director_headers)
+        # Now delete id 2
+        res = self.client().delete('/api/genres/2', headers=casting_director_headers)
+        self.assertEqual(res.status_code, 200)
+        # test that it doesn't exist anymore
+        res = self.client().get('/api/genres/2', headers=casting_director_headers)
         self.assertEqual(res.status_code, 404)
 
     def test_delete_single_genre_error(self):

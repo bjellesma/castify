@@ -10,7 +10,7 @@
     "db-upgrade": "pipenv run python manage.py db upgrade",
     "db-downgrade": "pipenv run python manage.py db downgrade",
     "create-test": "sudo -u postgres bash -c 'pg_dump agency > /mnt/winblows/Users/Bjellz/Documents/Projects/udacity-fullstack/castify/backend/agency.psql'",
-    "test-db": "dropdb agency_test --if-exists && createdb agency_test && psql agency_test < agency.psql",
+    "test-db": "dropdb agency_test --if-exists && createdb agency_test && psql agency_test < agency_test.psql",
     "test": "pipenv run nose2 -v -C",
     "test-full": "npm run test-db && npm run test"
   },
