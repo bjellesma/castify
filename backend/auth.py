@@ -137,7 +137,7 @@ def verify_decode_jwt(token):
             raise AuthError({
                 'code': 'token_expired',
                 'description': 'Token expired.',
-                'additional information': 'Please generate a new token'
+                'additional information': 'Please generate a new token by using https://dev-cpb64ukj.us.auth0.com/authorize?audience=https://127.0.0.1:5000&response_type=token&client_id=caolVXfgEL9z2t67IMOhcl10alFoRDQs&redirect_uri=https://127.0.0.1:5000/login-results'
             }, 401)
 
         except jwt.JWTClaimsError:

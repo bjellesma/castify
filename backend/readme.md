@@ -20,6 +20,8 @@ EXECUTIVE_PRODUCER_JWT=
 
 You can generate new JWTs by using the following steps:
 
+**NOTE** If a token expiration message is encountered. The following link will also be in the "message" key of the JSON response.
+
 1. In a web browser, go to `https://dev-cpb64ukj.us.auth0.com/authorize?audience=https://127.0.0.1:5000&response_type=token&client_id=caolVXfgEL9z2t67IMOhcl10alFoRDQs&redirect_uri=https://127.0.0.1:5000/login-results`
   * You may need to clear the cache in your browser if you"ve previously logged in. 
 2. Login with an auth0 user. The table below shows the relationship between roles and the JWT that it will generate
@@ -55,14 +57,14 @@ For Example, the executive producer role has all of the permissions of casting d
 
 # Errors
 
-The following table lists some of the error codes that you may receive. The response may also include an `additional_information` string to provide additional information that may be helpful to the user. For example, If no questions are found for the GET request to `/api/questions`, The response will be 
+The following table lists some of the error codes that you may receive. The response may also include an `additional_information` string to provide additional information that may be helpful to the user. For example, If no movies are found for the GET request to `/api/movies`, The response will be 
 
 ```json
 {
-    "success": False, 
-    "error": 404,
-    "message": "Not Found",
-    "additional_information": "There are no questions"
+  "additional_information": "No movies have been found!", 
+  "error": 404, 
+  "message": "Not Found", 
+  "success": false
 }
 ```
 
@@ -1011,3 +1013,35 @@ No Request Body is sent.
 ```bash
 curl -X Delete -H "Authorization <executive producer JWT>"  http://localhost:5000/api/movies/11
 ```
+
+
+
+# Creating database migration
+
+Database Migrations are used with Castify to make it easier to manage database versions. Any change to the database schema should use the following steps
+
+1. If no db migrations have been performed, if there is no `/backend/migrations` folder, run `npm run db-init` to create the migrations folder.
+2. Make a change to the database schema by editing one of the files in `/models`. For example, in the following code, we've added release date as a column to the movie database.
+
+```py
+class Movie(db.Model):
+    __tablename__ = 'movie'
+    id = db.Column(db.Integer, primary_key=True)
+    title=db.Column(db.String, nullable=False)
+    release_date = db.Column(db.DateTime, nullable=False)
+```
+
+3. Run `npm run db-migrate` to create a migration script in `/backend/migrations/alembic/versions`. Your output from the command will read as the following:
+
+```
+INFO  [alembic.autogenerate.compare] Detected added column 'movie.release_date'
+```
+
+Notice that running this command alone will not change the schema of the database yet. You can verify this by using a command line tool on your database.
+
+4. Run `npm run db-upgrade` to upgrade the database to the newest version.
+
+You can verify that the column was added by using a command line tool on your database.
+
+5. If the database changes were not as you expected, you can downgrade the database by run `npm run db-downgrade`
+
