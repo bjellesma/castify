@@ -4,9 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flaskr import create_app
 import unittest
 import json
-from tests.test_agency import
-(casting_assistant_headers, casting_director_headers,
- executive_producer_headers, public_headers)
+from tests.test_agency import (
+    casting_assistant_headers, casting_director_headers,
+    executive_producer_headers, public_headers
+    )
 
 
 class MovieTestCase(unittest.TestCase):

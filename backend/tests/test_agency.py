@@ -3,8 +3,9 @@ import unittest
 from flask_sqlalchemy import SQLAlchemy
 from secure import TEST_CONNECT_STRING
 from models.models import setup_db
-from secure import
-(CASTING_ASSISTANT_JWT, CASTING_DIRECTOR_JWT, EXECUTIVE_PRODUCER_JWT)
+from secure import (
+    CASTING_ASSISTANT_JWT, CASTING_DIRECTOR_JWT, EXECUTIVE_PRODUCER_JWT
+    )
 
 casting_assistant_headers = {
     'Content-Type': 'application/json',

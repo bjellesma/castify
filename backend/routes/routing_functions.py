@@ -24,22 +24,22 @@ def validate_against_api(data, schema, request, optional=False):
         data = schema(data)
     except DictInvalid as error:
         api_errors.append(
-            f'Data not understood. Did you sent request parameters
-            instead of a JSON body?')
+            f'''Data not understood. Did you sent request parameters
+            instead of a JSON body?''')
     except Exception as errors:
         for err in errors.errors:
             if err.msg == "required key not provided":
                 if not optional:
                     api_errors.append(
-                        f'{err.path[0]} was required and not provided for
+                        f'''{err.path[0]} was required and not provided for
                         call to {request.path} as {request.method}.
                         Please consult the documentation for this
-                        endpoint.')
+                        endpoint.''')
             elif 'expected' in err.msg:
                 api_errors.append(
-                    f'{err.path[0]} was in the incorrect format for call
+                    f'''{err.path[0]} was in the incorrect format for call
                     to {request.path} as {request.method}. Please
-                    consult the documentation for this endpoint.')
+                    consult the documentation for this endpoint.''')
     return api_errors
 
 

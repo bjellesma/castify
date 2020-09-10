@@ -4,8 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flaskr import create_app
 import unittest
 import json
-from tests.test_agency import
-(casting_assistant_headers, casting_director_headers)
+from tests.test_agency import (
+    casting_assistant_headers, casting_director_headers
+    )
 
 
 class GenreTestCase(unittest.TestCase):

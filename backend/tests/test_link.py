@@ -1,10 +1,7 @@
 from flaskr import create_app
 import unittest
 import json
-from tests.test_agency import (casting_assistant_headers,
-                               casting_director_headers,
-                               executive_producer_headers,
-                               public_headers)
+from tests.test_agency import public_headers
 from flask_sqlalchemy import SQLAlchemy
 from secure import TEST_CONNECT_STRING
 from models.models import setup_db
