@@ -1,10 +1,11 @@
 from models.models import db
 from routes.routing_functions import flask_abort
 
+
 class Genre(db.Model):
     __tablename__ = 'genre'
     id = db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
 
     def __init__(self, name):
         """
@@ -31,7 +32,7 @@ class Genre(db.Model):
         )
         db.session.add(genre)
         db.session.commit()
-        return genre.id 
+        return genre.id
 
     def update_genre(insert_data):
         """update genre object in database
@@ -49,14 +50,17 @@ class Genre(db.Model):
         genre = Genre.query.get(genre_id)
         if not genre:
             flask_abort(404, message=f"No genre was found for id {genre_id}")
-        genre.name = insert_data.get('name') if insert_data.get('name') else genre.name
+        genre.name = insert_data.get(
+            'name') if insert_data.get('name') else genre.name
         db.session.commit()
         return genre
 
     def delete_genre(genre_id):
         genre = Genre.query.get(genre_id)
         if not genre:
-            flask_abort(status_code=404, message=f"No genre was found for id {genre_id}")
+            flask_abort(
+                status_code=404,
+                message=f"No genre was found for id {genre_id}")
         db.session.delete(genre)
         db.session.commit()
         return genre.id

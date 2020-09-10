@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort, jsonify    
+from flask import Blueprint, request, abort, jsonify
 from flask_cors import CORS, cross_origin
 from auth import requires_auth
 from routes.routing_functions import validate_against_api
@@ -10,8 +10,9 @@ genre_routes = Blueprint('genre_routes', __name__)
 # define schema as global so that it can be used by the whole route
 # TODO validating as str for now
 genre_schema = Schema({
-    Required('name'):str
+    Required('name'): str
 })
+
 
 @genre_routes.route('/api/genres', methods=['GET'])
 @requires_auth('read:genres')
@@ -22,12 +23,13 @@ def read_all_genres():
     Returns:
         JSON: {
             "success": boolean describing if the database read was successful
-            "genres": A list of all dictionary representations of genres in the database
+            "genres": A list of all dictionary representations of genres
+            in the database
         }
     """
     try:
         genres = Genre.query.all()
-        
+
     except Exception as err:
         abort(422, description=err)
     return jsonify({
@@ -36,6 +38,8 @@ def read_all_genres():
     })
 
 # TODO need docstring
+
+
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['GET'])
 @requires_auth('read:genres')
 @cross_origin()
@@ -47,6 +51,7 @@ def read_single_genre(genre_id):
         "success": True,
         "genre": genre.format()
     })
+
 
 @genre_routes.route('/api/genres', methods=['POST'])
 @requires_auth('create:genres')
@@ -63,32 +68,38 @@ def create_genre():
     data = request.get_json()
     api_errors = []
     # Validate json sent
-    api_errors = validate_against_api(data=data, schema=genre_schema, request=request)
+    api_errors = validate_against_api(
+        data=data, schema=genre_schema, request=request)
     # if there are errors, abort with a 400
     if api_errors:
         abort(400, description=api_errors)
     name = data["name"]
     genre_id = Genre.create_genre(
-        name = name
+        name=name
     )
     return jsonify({
         "success": True,
         "genre_id": genre_id
     })
 
+
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['PATCH'])
 @requires_auth('update:genres')
 @cross_origin()
 def update_genre(genre_id):
     """Update a genre in a database
-    
+
     Args:
         genre_id (int): id of the genre to be updated
     """
     data = request.get_json()
     api_errors = []
     # Validate json sent
-    api_errors = validate_against_api(data=data, schema=genre_schema, request=request, optional=True)
+    api_errors = validate_against_api(
+        data=data,
+        schema=genre_schema,
+        request=request,
+        optional=True)
     # if there are errors, abort with a 400
     if api_errors:
         abort(400, description=api_errors)
@@ -100,6 +111,7 @@ def update_genre(genre_id):
         "success": True,
         "genre": genre.format()
     })
+
 
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['Delete'])
 @requires_auth('delete:genres')

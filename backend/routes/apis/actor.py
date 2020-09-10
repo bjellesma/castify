@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort, jsonify    
+from flask import Blueprint, request, abort, jsonify
 from flask_cors import CORS, cross_origin
 from auth import requires_auth
 from routes.routing_functions import validate_against_api
@@ -10,10 +10,11 @@ actor_routes = Blueprint('actor_routes', __name__)
 # define schema as global so that it can be used by the whole route
 # TODO validating as str for now
 actor_schema = Schema({
-    Required('name'):str,
-    Required('age'):int,
-    Optional('gender'):str
+    Required('name'): str,
+    Required('age'): int,
+    Optional('gender'): str
 })
+
 
 @actor_routes.route('/api/actors', methods=['GET'])
 @requires_auth('read:actors')
@@ -24,7 +25,8 @@ def read_all_actors():
     Returns:
         JSON: {
             "success": boolean describing if the database read was successful
-            "actors": A list of all dictionary representations of actors in the database
+            "actors": A list of all dictionary representations of actors
+                in the database
         }
     """
     try:
@@ -65,6 +67,7 @@ def read_single_actor(actor_id):
         "actor": actor.format()
     })
 
+
 @actor_routes.route('/api/actors', methods=['POST'])
 @requires_auth('create:actors')
 @cross_origin()
@@ -80,7 +83,8 @@ def create_actor():
     data = request.get_json()
     api_errors = []
     # Validate json sent
-    api_errors = validate_against_api(data=data, schema=actor_schema, request=request)
+    api_errors = validate_against_api(
+        data=data, schema=actor_schema, request=request)
     # if there are errors, abort with a 400
     if api_errors:
         abort(400, description=api_errors)
@@ -89,8 +93,8 @@ def create_actor():
     # gender is optional
     gender = data["gender"] if "gender" in data else None
     actor_id = Actor.create_actor(
-        name = name,
-        age = age,
+        name=name,
+        age=age,
         gender=gender
     )
     return jsonify({
@@ -98,23 +102,28 @@ def create_actor():
         "actor_id": actor_id
     })
 
+
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['PATCH'])
 @requires_auth('update:actors')
 @cross_origin()
 def update_actor(actor_id):
     """Update a actor in a database
-    
+
     Args:
         actor_id (int): id of the actor to be updated
     """
     data = request.get_json()
     api_errors = []
     # Validate json sent
-    api_errors = validate_against_api(data=data, schema=actor_schema, request=request, optional=True)
+    api_errors = validate_against_api(
+        data=data,
+        schema=actor_schema,
+        request=request,
+        optional=True)
     # if there are errors, abort with a 400
     if api_errors:
         abort(400, description=api_errors)
-        
+
     actor = Actor.update_actor({
         "id": actor_id,
         "name": data.get("name"),
@@ -125,6 +134,7 @@ def update_actor(actor_id):
         "success": True,
         "actor": actor.format()
     })
+
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['Delete'])
 @requires_auth('delete:actors')

@@ -1,7 +1,8 @@
 from models.models import db
-from models.movies import Movie 
+from models.movies import Movie
 from models.actors import Actor
 from routes.routing_functions import flask_abort
+
 
 def create_movie_actor_link(movie_id, actor_id):
     """Create new movie
@@ -13,7 +14,7 @@ def create_movie_actor_link(movie_id, actor_id):
     Returns:
         tuple of sqlalchemy object: movie and actor
     """
-    
+
     movie = Movie.query.get(movie_id)
     actor = Actor.query.get(actor_id)
     if not actor or not movie:
