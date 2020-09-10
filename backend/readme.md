@@ -1,6 +1,33 @@
-# Backend Documentation
+This Page contains all of the general documentation for the Castify API.
 
-## Key Dependencies
+* [General](#general)
+    * [Key Dependencies](#key-dependencies)
+    * [Generation JSON Web Tokens](#generate-jwt)
+    * [API Error](#api-errors)
+* [API Reference](#api-reference)
+    * [Actors](#actors)
+        * [Get all Actors](#get-all-actors)
+        * [Get Single Actor](#get-single-actor)
+        * [Create Actor](#create-actor)
+        * [Update Actor](#update-actor)
+        * [Delete Actor](#delete-actor)
+    * [Genres](#genres)
+        * [Get all Genres](#get-all-genres)
+        * [Get Single Genre](#get-single-genre)
+        * [Create Genre](#create-genre)
+        * [Update Genre](#update-genre)
+        * [Delete Genre](#delete-genre)
+    * [Movies](#movies)
+        * [Get all Movies](#get-all-movies)
+        * [Get Single Movie](#get-single-movie)
+        * [Create Movie](#create-movie)
+        * [Update Movie](#update-movie)
+        * [Delete Movie](#delete-movie)
+* [Creating Database Migrations](#migration)
+
+# <a name="general">General Information</a>
+
+## <a name="key-dependencies">Key Dependencies</a>
 
 The backend is built heavily upon the following technologies.
 
@@ -8,7 +35,7 @@ The backend is built heavily upon the following technologies.
 
 - [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we"ll use handle the lightweight sqlite database. You"ll primarily work in app.py and can reference models.py. 
 
-# <a name="generate-jwt">Generating JSON Web Tokens</a>
+## <a name="generate-jwt">Generating JSON Web Tokens</a>
 
 Most routes in Castify are non public and are only available to authenticated casting assistants, casting directors, and executive producers through the use of JSON Web Tokens (JWT). Because of this, unit tests will need valid JWTs to authenticate. JWTs also expire after a certain amount of time and will need to be refreshed. Specifically, JWTs for unit tests will be read from these fields as part of the `.env` file.
 
@@ -19,6 +46,8 @@ EXECUTIVE_PRODUCER_JWT=
 ```
 
 You can generate new JWTs by using the following steps:
+
+**NOTE** If a token expiration message is encountered. The following link will also be in the "message" key of the JSON response.
 
 1. In a web browser, go to `https://dev-cpb64ukj.us.auth0.com/authorize?audience=https://127.0.0.1:5000&response_type=token&client_id=caolVXfgEL9z2t67IMOhcl10alFoRDQs&redirect_uri=https://127.0.0.1:5000/login-results`
   * You may need to clear the cache in your browser if you"ve previously logged in. 
@@ -37,32 +66,16 @@ You can generate new JWTs by using the following steps:
 
 Once all JWT definitions are made in your `.env` file, the tests should all be passing once again (or at least not failing with an unauthorized message).
 
-## API Documentation
+## <a name="api-errors">API Errors</a>
 
-* The base URL for all requests is `http://localhost:5000/api`
-* Many endpoints for the Castify API will require a valid JSON web token (jwt) to authenticate. 
-    * An "Authentication Required" subsection is included in each endpoint documentation specifying the minimum role level that user needs. Roles are hierarchical and the hierarchy is defined in the following table.
-    * Tokens can be generated using the instructions in [Generating JSON Web Tokens](#generate-jwt) above.
-    * The example curl request section will include an authorization header for the applicable request.
-
-| Role | Includes permissions of |
-|---|---|
-| Executive Producer | Casting Director |
-| Casting Director | Casting Assistant |
-| Casting Assistant | None |
-
-For Example, the executive producer role has all of the permissions of casting director (who also has all of the permissions of casting assistant).
-
-# Errors
-
-The following table lists some of the error codes that you may receive. The response may also include an `additional_information` string to provide additional information that may be helpful to the user. For example, If no questions are found for the GET request to `/api/questions`, The response will be 
+All errors for the Castify API will throw JSON as errors. The following table lists some of the error codes that you may receive. The response may also include an `additional_information` string to provide additional information that may be helpful to the user. For example, If no movies are found for the GET request to `/api/movies`, The response will be 
 
 ```json
 {
-    "success": False, 
-    "error": 404,
-    "message": "Not Found",
-    "additional_information": "There are no questions"
+  "additional_information": "No movies have been found!", 
+  "error": 404, 
+  "message": "Not Found", 
+  "success": false
 }
 ```
 
@@ -74,7 +87,7 @@ The following table lists some of the error codes that you may receive. The resp
 | 422 | Unprocessable | `{"success": False, "error": 422,"message": "Cannot process"}` | The server cannot process the data that it was given. Check the documentation to make sure that your request has the correct data types. |
 | 500 | Internal Server Error | `{"success": False, "error": 500,"message": Internal Server Error"}` | The server is unable to process the request due to a bug on our end. Send a bug report support@localhost.com complete with the exact steps to replicate the bug. |
 
-# Resources
+# <a name="api-reference">API Reference</a>
 
 This section is a breakdown of all the endpoints used, grouped by the particular resource
 
@@ -96,6 +109,20 @@ This section is a breakdown of all the endpoints used, grouped by the particular
     * [Create Movie](#create-movie)
     * [Update Movie](#update-movie)
     * [Delete Movie](#delete-movie)
+
+* The base URL for all requests is `http://localhost:5000/api`
+* Many endpoints for the Castify API will require a valid JSON web token (jwt) to authenticate. 
+    * An "Authentication Required" subsection is included in each endpoint documentation specifying the minimum role level that user needs. Roles are hierarchical and the hierarchy is defined in the following table.
+    * Tokens can be generated using the instructions in [Generating JSON Web Tokens](#generate-jwt) above.
+    * The example curl request section will include an authorization header for the applicable request.
+
+| Role | Includes permissions of |
+|---|---|
+| Executive Producer | Casting Director |
+| Casting Director | Casting Assistant |
+| Casting Assistant | None |
+
+For Example, the executive producer role has all of the permissions of casting director (who also has all of the permissions of casting assistant).
 
 ## <a name="actors">Actors</a>
 
@@ -1011,3 +1038,35 @@ No Request Body is sent.
 ```bash
 curl -X Delete -H "Authorization <executive producer JWT>"  http://localhost:5000/api/movies/11
 ```
+
+
+
+# <a name="migration">Creating Database Migrations</a>
+
+Database Migrations are used with Castify to make it easier to manage database versions. Any change to the database schema should use the following steps
+
+1. If no db migrations have been performed, if there is no `/backend/migrations` folder, run `npm run db-init` to create the migrations folder.
+2. Make a change to the database schema by editing one of the files in `/models`. For example, in the following code, we've added release date as a column to the movie database.
+
+```py
+class Movie(db.Model):
+    __tablename__ = 'movie'
+    id = db.Column(db.Integer, primary_key=True)
+    title=db.Column(db.String, nullable=False)
+    release_date = db.Column(db.DateTime, nullable=False)
+```
+
+3. Run `npm run db-migrate` to create a migration script in `/backend/migrations/alembic/versions`. Your output from the command will read as the following:
+
+```
+INFO  [alembic.autogenerate.compare] Detected added column 'movie.release_date'
+```
+
+Notice that running this command alone will not change the schema of the database yet. You can verify this by using a command line tool on your database.
+
+4. Run `npm run db-upgrade` to upgrade the database to the newest version.
+
+You can verify that the column was added by using a command line tool on your database.
+
+5. If the database changes were not as you expected, you can downgrade the database by run `npm run db-downgrade`
+

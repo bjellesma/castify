@@ -18,7 +18,6 @@ AuthError Exception
 A standardized way to communicate auth failure modes
 '''
 class AuthError(Exception):
-    # extra TODO return json
     def __init__(self, error, status_code, additional_information='No additional information is available'):
         self.error = error
         self.status_code = status_code
@@ -79,7 +78,8 @@ def check_permissions(permission, payload):
     if permission not in payload['permissions']:
         raise AuthError(
             error='Unauthorized',
-            status_code='401'
+            status_code='401',
+            additional_information='You do not have the proper permissions to perform this action.'
         )
     return True
 '''
@@ -109,7 +109,7 @@ def verify_decode_jwt(token):
     if 'kid' not in unverified_header:
         raise AuthError({
             'code': 'invalid_header',
-            'description': 'Authorization malformed.'
+            'description': 'Authorization malformed. The key is not present in the JWT'
         }, 401)
 
     for key in jwks['keys']:
@@ -138,13 +138,13 @@ def verify_decode_jwt(token):
             raise AuthError({
                 'code': 'token_expired',
                 'description': 'Token expired.',
-                'additional information': 'Please generate a new token'
+                'additional information': 'Please generate a new token by using https://dev-cpb64ukj.us.auth0.com/authorize?audience=https://127.0.0.1:5000&response_type=token&client_id=caolVXfgEL9z2t67IMOhcl10alFoRDQs&redirect_uri=https://127.0.0.1:5000/login-results'
             }, 401)
 
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check that the audience and issuer of the server matches the auth0 account.'
+                'description': 'Incorrect claims. Please, check that the audience and issuer matches the audience and issuer of the auth0 account.'
             }, 401)
         except Exception:
             raise AuthError({

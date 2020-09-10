@@ -14,7 +14,7 @@ class LinkTestCase(unittest.TestCase):
         setup_db(self.app, TEST_CONNECT_STRING)
 
         self.test_movie_actor_link = {
-            'movie_id': 9,
+            'movie_id': 1,
             'actor_id': 1
         }
 

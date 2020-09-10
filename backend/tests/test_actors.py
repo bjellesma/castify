@@ -14,6 +14,12 @@ class ActorTestCase(unittest.TestCase):
         self.client = self.app.test_client
         setup_db(self.app, TEST_CONNECT_STRING)
 
+        self.test_actor_original = {
+            'name': 'Tom Hardy',
+            'age': 42,
+            'gender': 'male'
+        }
+
         self.test_actor = {
             'name': 'Test McTesterson',
             'age': 25,
@@ -51,15 +57,14 @@ class ActorTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertIsInstance(data['actors'], list)
 
-    # TODO what if the id is not there
     def test_read_single_actor(self):
-        res = self.client().get('/api/actors/9',headers=casting_assistant_headers)
+        res = self.client().get('/api/actors/1',headers=casting_assistant_headers)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertIsInstance(data['actor'], dict)
+        self.assertEqual(data['actor']['name'], self.test_actor_original.get('name'))
 
-    # TODO what if the id is there
     def test_read_single_actor_error(self):
         res = self.client().get('/api/actors/4004',headers=casting_assistant_headers)
         data = json.loads(res.data)
@@ -88,27 +93,34 @@ class ActorTestCase(unittest.TestCase):
 
     def test_update_actor(self):
         res = self.client().patch(
-            '/api/actors/9',
+            '/api/actors/1',
             data=json.dumps(self.test_actor_update),
             headers=casting_director_headers 
         )
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['actor']['name'], self.test_actor_update['name'])
+        res = self.client().get('/api/actors/1', headers=casting_director_headers)
+        data = json.loads(res.data)
+        self.assertEqual(data['actor']['name'], self.test_actor_update['name'])
 
     def test_update_actor_error(self):
         res = self.client().patch(
-            '/api/actors/9',
+            '/api/actors/1',
             data=json.dumps(self.test_actor_update_error),
             headers=casting_director_headers 
         )
         self.assertEqual(res.status_code, 400)
 
     def test_delete_single_actor(self):
-        res = self.client().delete('/api/actors/10', headers=casting_director_headers)
+        # First test that id 2 exists
+        res = self.client().get('/api/actors/2', headers=casting_director_headers)
         self.assertEqual(res.status_code, 200)
-        # also test that this actor is now a 404
-        res = self.client().get('/api/actors/10', headers=casting_director_headers)
+        # Now delete id 2
+        res = self.client().delete('/api/actors/2', headers=casting_director_headers)
+        self.assertEqual(res.status_code, 200)
+        # test that id doesn't exist anymore
+        res = self.client().get('/api/actors/2', headers=casting_director_headers)
         self.assertEqual(res.status_code, 404)
 
     def test_delete_single_actor_error(self):
