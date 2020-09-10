@@ -78,7 +78,8 @@ def check_permissions(permission, payload):
     if permission not in payload['permissions']:
         raise AuthError(
             error='Unauthorized',
-            status_code='401'
+            status_code='401',
+            additional_information='You do not have the proper permissions to perform this action.'
         )
     return True
 '''
@@ -108,7 +109,7 @@ def verify_decode_jwt(token):
     if 'kid' not in unverified_header:
         raise AuthError({
             'code': 'invalid_header',
-            'description': 'Authorization malformed.'
+            'description': 'Authorization malformed. The key is not present in the JWT'
         }, 401)
 
     for key in jwks['keys']:
@@ -143,7 +144,7 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check that the audience and issuer of the server matches the auth0 account.'
+                'description': 'Incorrect claims. Please, check that the audience and issuer matches the audience and issuer of the auth0 account.'
             }, 401)
         except Exception:
             raise AuthError({

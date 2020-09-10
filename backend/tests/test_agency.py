@@ -44,10 +44,10 @@ class AgencyTestCase(unittest.TestCase):
         pass
 
     def test_init(self):
-        res = self.client().get('/api/test')
+        res = self.client().get('/api')
         self.assertEqual(res.status_code, 200)
 
     def test_init_404(self):
-        res = self.client().get('/api/testd')
+        res = self.client().get('/apis')
         self.assertEqual(res.status_code, 404)
 
