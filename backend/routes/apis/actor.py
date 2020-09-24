@@ -17,7 +17,6 @@ actor_schema = Schema({
 
 
 @actor_routes.route('/api/actors', methods=['GET'])
-@requires_auth('read:actors')
 @cross_origin()
 def read_all_actors():
     """Read all actors in database
