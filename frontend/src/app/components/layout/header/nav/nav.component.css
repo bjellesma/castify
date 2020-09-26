@@ -1,0 +1,18 @@
+
+.nav-wrapper{
+    display:flex;
+    justify-content: left;
+    width: 80%;
+    margin: auto;
+    padding: auto;
+}
+li {
+    display: block;
+    padding:1em;
+    list-style-type: none;
+    background: var(--main-bg-color);
+}
+li a{
+    color:var(--main-text-color);
+    text-decoration: none;
+}

@@ -1,0 +1,24 @@
+#actors-component {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, 320px);
+    color:var(--main-text-color);
+    gap:20px;
+    justify-content: center;
+    padding-bottom:50px;
+}
+.actor-card{
+    border:1px solid #000;
+    -webkit-box-shadow: -2px 7px 21px -9px rgba(0,0,0,0.75);
+	-moz-box-shadow: -2px 7px 21px -9px rgba(0,0,0,0.75);
+	box-shadow: -2px 7px 21px -9px rgba(0,0,0,0.75);
+}
+.actor-headshot{
+    display:block;
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+.actor-stats{
+    background-color: var(--secondary-background-color);
+	padding:15px;
+}

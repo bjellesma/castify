@@ -9,6 +9,8 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
 import { ActorsComponent } from './components/pages/actors/actors.component';
+import { LogoComponent } from './components/layout/header/logo/logo.component';
+import { NavComponent } from './components/layout/header/nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { ActorsComponent } from './components/pages/actors/actors.component';
     AboutComponent,
     HomeComponent,
     FooterComponent,
-    ActorsComponent
+    ActorsComponent,
+    LogoComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

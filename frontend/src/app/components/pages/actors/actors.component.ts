@@ -12,7 +12,8 @@ export class ActorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.actorsService.getActors().subscribe(data => {
-      this.actors = data.actors
+      this.actors = data
+      // this.actors = data.actors
     })
   }
 

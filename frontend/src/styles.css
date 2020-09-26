@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --main-background-color:#15202B;
+    --secondary-background-color:#192734;
+    --main-text-color:#fff;
+}
+body{
+    background-color: var(--main-background-color);
+}
+.basic-component{
+    width:80%;
+    margin:auto;
+    padding:auto;
+}

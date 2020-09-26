@@ -1,3 +1,15 @@
-<li *ngFor="let actor of actors">
-    {{actor.age}}
-</li>
+<div class="basic-component" id="actors-component">
+    <div class="actor-card" *ngFor="let actor of actors">
+        <img class="actor-headshot" src={{actor.url}}>
+        <div class="actor-stats">
+            <h3>Name: {{actor.title}}</h3>
+            <h3>Age: {{actor.albumId}}</h3>
+            <!-- <label>Name:</label>{{actor.name}} -->
+            
+            <!-- <p>Age: {{actor.age}}</p> -->
+            
+        </div>
+        
+    </div>
+    
+</div>
