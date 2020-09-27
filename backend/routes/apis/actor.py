@@ -39,7 +39,7 @@ def read_all_actors():
 
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['GET'])
-@requires_auth('read:actors')
+# @requires_auth('read:actors')
 @cross_origin()
 def read_single_actor(actor_id):
     """Read Single Actor from database
@@ -68,7 +68,7 @@ def read_single_actor(actor_id):
 
 
 @actor_routes.route('/api/actors', methods=['POST'])
-@requires_auth('create:actors')
+# @requires_auth('create:actors')
 @cross_origin()
 def create_actor():
     """Insert Actor into database if validation is passed
@@ -103,7 +103,7 @@ def create_actor():
 
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['PATCH'])
-@requires_auth('update:actors')
+# @requires_auth('update:actors')
 @cross_origin()
 def update_actor(actor_id):
     """Update a actor in a database
@@ -136,7 +136,7 @@ def update_actor(actor_id):
 
 
 @actor_routes.route('/api/actors/<int:actor_id>', methods=['Delete'])
-@requires_auth('delete:actors')
+# @requires_auth('delete:actors')
 @cross_origin()
 def delete_single_actor(actor_id):
     """delete single actor from the database

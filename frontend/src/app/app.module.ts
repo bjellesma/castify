@@ -15,7 +15,7 @@ import { LogoComponent } from './components/layout/header/logo/logo.component';
 import { NavComponent } from './components/layout/header/nav/nav.component';
 import { AddActorComponent } from './components/pages/add-actor/add-actor.component';
 import { UpdateActorComponent } from './components/pages/update-actor/update-actor.component';
-import { ActorfomComponent } from './components/pages/partials/form/actorfom/actorfom.component';
+import { ActorformComponent } from './components/pages/partials/form/actorform/actorform.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { ActorfomComponent } from './components/pages/partials/form/actorfom/act
     NavComponent,
     AddActorComponent,
     UpdateActorComponent,
-    ActorfomComponent
+    ActorformComponent
   ],
   imports: [
     BrowserModule,

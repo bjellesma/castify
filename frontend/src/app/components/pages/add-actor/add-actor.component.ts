@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-actor.component.css']
 })
 export class AddActorComponent implements OnInit {
+  formType:string = "add"
 
   constructor() { }
 

@@ -1,7 +1,7 @@
 <form id="actor-form" class="form" (ngSubmit)="onSubmit()">
     <div class="form-element">
         <label for="fullName">Please enter the full of the Actor or Actress: </label>
-        <input type="text" name="name" id="fullName" [(ngModel)]="fullName">
+        <input type="text" name="name" id="fullName" value="123" [(ngModel)]="fullName">
     </div>
     <div class="form-element">
         <label for="gender">Gender: </label>
@@ -15,5 +15,6 @@
         <label for="age">Age: </label>
         <input type="number" name="age" id="age" [(ngModel)]="age">
     </div>
-    <input type="submit" value="Submit" class="btn btn-submit">
+    <input *ngIf="formType == 'add'" type="submit" value="Add Actor" class="btn btn-submit">
+    <input *ngIf="formType == 'update'" type="submit" value="Update Actor" class="btn btn-submit">
 </form>

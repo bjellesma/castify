@@ -10,8 +10,8 @@
             </div>
             <!-- TODO actor-options should only be available for authenticated users -->
             <div class="actor-options">
-                <button class="btn btn-update" routerLink="/update-actor">Update</button>
-                <button class="btn btn-delete">Delete</button>
+                <button class="btn btn-update" routerLink="/update-actor" [queryParams]="{'actor_id': actor.id}">Update</button>
+                <button class="btn btn-delete" (click)="deleteActor(actor.id)">Delete</button>
             </div>
             
         </div>

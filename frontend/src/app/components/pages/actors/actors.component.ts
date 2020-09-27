@@ -16,6 +16,9 @@ export class ActorsComponent implements OnInit {
     })
   }
 
-  
+    //TODO handle delete better
+  deleteActor(aid): void {
+    this.actorsService.deleteActor(aid).subscribe()
+  }
 
 }
