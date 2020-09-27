@@ -17,7 +17,16 @@ export class ActorsService {
   constructor(private http:HttpClient) { }
 
   getActors():Observable<Actors>{
-    return this.http.get<Actors>('https://jsonplaceholder.typicode.com/photos') 
-    // return this.http.get<Actors>('http://127.0.0.1:5000/api/actors') 
+    return this.http.get<Actors>('http://127.0.0.1:5000/api/actors') 
+  }
+
+  addActor(actor):Observable<Actors>{
+    console.log(`data to post ${JSON.stringify(actor)}`)
+    let data = this.http.post<Actors>(
+      'http://127.0.0.1:5000/api/actors',
+      actor
+    )
+    console.log(`data: ${JSON.stringify(data)}`)
+    return data
   }
 }

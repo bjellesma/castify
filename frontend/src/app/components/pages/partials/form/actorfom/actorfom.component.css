@@ -1,0 +1,18 @@
+.form-element label{
+    line-height: 2.7em;
+}
+input, select{
+    margin-top:10px;
+    padding-top:10px;
+    border-radius:5px;
+    background-color: var(--secondary-background-color);
+    border:1px solid var(--border-color);
+    color:var(--main-text-color)
+}
+.form-element input[type="text"]{
+    width:100%;
+    
+}
+.form-element input[type="number"]{
+    width:20%;
+}

@@ -1,4 +1,4 @@
-#actors-component {
+#actors-view {
     display:grid;
     grid-template-columns: repeat(auto-fit, 320px);
     color:var(--main-text-color);
@@ -22,3 +22,12 @@
     background-color: var(--secondary-background-color);
 	padding:15px;
 }
+.actor-options{
+    display:flex;
+    justify-content: space-between;
+}
+.actor-options button{
+    margin:1em;
+    font-weight:bold;
+}
+

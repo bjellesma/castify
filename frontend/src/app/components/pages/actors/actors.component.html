@@ -1,15 +1,21 @@
 <div class="basic-component" id="actors-component">
-    <div class="actor-card" *ngFor="let actor of actors">
-        <img class="actor-headshot" src={{actor.url}}>
-        <div class="actor-stats">
-            <h3>Name: {{actor.title}}</h3>
-            <h3>Age: {{actor.albumId}}</h3>
-            <!-- <label>Name:</label>{{actor.name}} -->
-            
-            <!-- <p>Age: {{actor.age}}</p> -->
+    <button><a routerLink="/add-actor">Add actor</a></button>
+    <div id="actors-view">
+        <div class="actor-card" *ngFor="let actor of actors">
+            <img class="actor-headshot" src="http://placekitten.com/400/200">
+            <div class="actor-stats">
+                <h3>Name: {{actor.name}}</h3>
+                <h3>Age: {{actor.age}}</h3>
+                <h3>Gender: {{actor.gender}}</h3>
+            </div>
+            <!-- TODO actor-options should only be available for authenticated users -->
+            <div class="actor-options">
+                <button class="btn btn-update" routerLink="/update-actor">Update</button>
+                <button class="btn btn-delete">Delete</button>
+            </div>
             
         </div>
-        
     </div>
+    
     
 </div>

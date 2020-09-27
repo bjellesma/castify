@@ -3,12 +3,37 @@
     --main-background-color:#15202B;
     --secondary-background-color:#192734;
     --main-text-color:#fff;
+
+    --submit-button-color:#17a2b8;
+
+    --border-color:#164D56;
 }
 body{
     background-color: var(--main-background-color);
 }
 .basic-component{
+    padding-top:1em;
     width:80%;
     margin:auto;
     padding:auto;
+    color:var(--main-text-color)
+}
+.btn{
+    margin-top:10px;
+    border-radius: 2px;
+    width:100%;
+    font-weight:bold;
+    color:var(--main-text-color);
+    cursor: pointer;
+}
+.btn-submit{
+    background-color: var(--submit-button-color);
+    
+}
+.btn-update{
+    background-color: green;
+}
+
+.btn-delete{
+    background-color: red;
 }
