@@ -14,12 +14,9 @@ li {
     padding:1em;
     list-style-type: none;
     background: var(--main-bg-color);
+    color:var(--main-text-color);
 }
 li:hover{
     background-color: #add8e6;
     cursor: pointer;
-}
-li a{
-    color:var(--main-text-color);
-    text-decoration: none;
 }

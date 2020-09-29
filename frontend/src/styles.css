@@ -37,3 +37,8 @@ body{
 .btn-delete{
     background-color: red;
 }
+.btn-link{
+    background-color: #007bff;
+    border-color: #007bff;
+    color:#fff;
+}

@@ -1,5 +1,8 @@
 <div class="basic-component" id="actors-component">
-    <button><a routerLink="/add-actor">Add actor</a></button>
+    <div class="add-actor">
+        <button class="btn-link" routerLink="/add-actor">Add Actor</button>
+    </div>
+    
     <div id="actors-view">
         <div class="actor-card" *ngFor="let actor of actors">
             <img class="actor-headshot" src="http://placekitten.com/400/200">

@@ -1,14 +1,21 @@
 <nav>
     <ul class="nav-wrapper">
         <!-- TODO figure out a way to make these dynamic -->
-        <li>
-            <a routerLink="/">Home</a> 
+        <li routerLink="/">
+            Home
         </li>
-        <li>
-            <a routerLink="/about">About</a> 
+        <li routerLink="/about">
+            About
         </li>
-        <li>
-            <a routerLink="/actors">Actors</a> 
+        <li routerLink="/actors">
+            Actors
+        </li>
+        <li routerLink="/login">
+            Login
         </li>
     </ul>
+    <ul *ngIf="auth.user$ | async as user">
+        <li>{{ user.name }}</li>
+        <li>{{ user.email }}</li>
+      </ul>
 </nav>

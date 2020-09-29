@@ -30,4 +30,15 @@
     margin:1em;
     font-weight:bold;
 }
-
+.add-actor{
+    display:flex;
+    justify-content: center;
+    padding-bottom:1em;
+}
+.add-actor button {
+    font-weight: bold;
+    line-height:20px;
+    border-radius: 5px;
+    font-size:20px;
+    padding:10px;
+}

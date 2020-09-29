@@ -16,6 +16,9 @@ import { NavComponent } from './components/layout/header/nav/nav.component';
 import { AddActorComponent } from './components/pages/add-actor/add-actor.component';
 import { UpdateActorComponent } from './components/pages/update-actor/update-actor.component';
 import { ActorformComponent } from './components/pages/partials/form/actorform/actorform.component';
+import { LoginComponent } from './components/pages/login/login.component';
+// Import the module from the SDK
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -29,13 +32,19 @@ import { ActorformComponent } from './components/pages/partials/form/actorform/a
     NavComponent,
     AddActorComponent,
     UpdateActorComponent,
-    ActorformComponent
+    ActorformComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    // Import the module into the application, with configuration
+    AuthModule.forRoot({
+      domain: 'dev-cpb64ukj.us.auth0.com',
+      clientId: 'caolVXfgEL9z2t67IMOhcl10alFoRDQs',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
