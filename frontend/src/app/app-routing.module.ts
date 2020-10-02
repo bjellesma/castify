@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '@auth0/auth0-angular';
 import { HomeComponent } from 'src/app/components/pages/home/home.component'
 import { AboutComponent } from './components/pages/about/about.component';
 import { ActorsComponent } from './components/pages/actors/actors.component';
 import { AddActorComponent } from './components/pages/add-actor/add-actor.component';
-import { LoginComponent } from './components/pages/login/login.component';
+import { ProfileComponent } from './components/pages/profile/profile.component';
 import { UpdateActorComponent } from './components/pages/update-actor/update-actor.component';
 
 
@@ -30,8 +31,10 @@ const routes: Routes = [
     component: UpdateActorComponent
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'profile',
+    component: ProfileComponent,
+    // Protect a route by registering the auth guard in the `canActivate` hook
+    canActivate: [AuthGuard]
   }
 ];
 

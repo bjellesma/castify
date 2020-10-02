@@ -16,9 +16,9 @@ import { NavComponent } from './components/layout/header/nav/nav.component';
 import { AddActorComponent } from './components/pages/add-actor/add-actor.component';
 import { UpdateActorComponent } from './components/pages/update-actor/update-actor.component';
 import { ActorformComponent } from './components/pages/partials/form/actorform/actorform.component';
-import { LoginComponent } from './components/pages/login/login.component';
 // Import the module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
+import { ProfileComponent } from './components/pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { AuthModule } from '@auth0/auth0-angular';
     AddActorComponent,
     UpdateActorComponent,
     ActorformComponent,
-    LoginComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

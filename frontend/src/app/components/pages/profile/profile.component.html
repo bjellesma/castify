@@ -1,0 +1,5 @@
+<div class="basic-component" *ngIf="auth.user$ | async as user">
+    <img src="{{user.picture}}">
+    <label>Name</label> {{user.name}}
+    <label>Email</label> {{user.email}}
+</div>
