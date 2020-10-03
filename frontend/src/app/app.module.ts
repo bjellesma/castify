@@ -25,6 +25,7 @@ import { AddMovieComponent } from './components/pages/add-movie/add-movie.compon
 import { UpdateMovieComponent } from './components/pages/update-movie/update-movie.component';
 import { AddGenreComponent } from './components/pages/add-genre/add-genre.component';
 import { UpdateGenreComponent } from './components/pages/update-genre/update-genre.component';
+import { MovieformComponent } from './components/pages/partials/form/movieform/movieform.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UpdateGenreComponent } from './components/pages/update-genre/update-gen
     AddMovieComponent,
     UpdateMovieComponent,
     AddGenreComponent,
-    UpdateGenreComponent
+    UpdateGenreComponent,
+    MovieformComponent
   ],
   imports: [
     BrowserModule,

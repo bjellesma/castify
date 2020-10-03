@@ -8,6 +8,7 @@
         <ng-container *ngIf="user; else unauth">
             <li routerLink="/profile">{{user.name}}</li>
             <li (click)="logout()" >Logout</li>
+            <li>{{user|json}}</li>
         </ng-container>
         <ng-template #unauth>
             <li (click)="login()">Login</li>

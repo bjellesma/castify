@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-movie.component.css']
 })
 export class AddMovieComponent implements OnInit {
+  formType:string = "add"
 
   constructor() { }
 

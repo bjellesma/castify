@@ -16,7 +16,6 @@ movie_schema = Schema({
 
 
 @movie_routes.route('/api/movies', methods=['GET'])
-@requires_auth('read:movies')
 @cross_origin()
 def read_all_movies():
     """Read all movies in database
