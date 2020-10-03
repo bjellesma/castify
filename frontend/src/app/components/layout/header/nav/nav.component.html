@@ -4,16 +4,25 @@
         <li routerLink="/">
             Home
         </li>
-        <li *ngIf="user" routerLink="/profile">{{user.name}}</li>
-        <li *ngIf="user" (click)="logout()" >Logout</li>
-        <li *ngIf="!user" (click)="login()">Login</li>
-        
+        <!-- only authorized users will see this -->
+        <ng-container *ngIf="user; else unauth">
+            <li routerLink="/profile">{{user.name}}</li>
+            <li (click)="logout()" >Logout</li>
+        </ng-container>
+        <ng-template #unauth>
+            <li (click)="login()">Login</li>
+        </ng-template>
         <li routerLink="/about">
             About
         </li>
         <li routerLink="/actors">
             Actors
         </li>
-        
+        <li routerLink="/movies">
+            Movies
+        </li>
+        <li routerLink="/genres">
+            Genres
+        </li>
     </ul>
 </nav>
