@@ -7,7 +7,7 @@ class Movie(db.Model):
     __tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    release_date = db.Column(db.DateTime, nullable=False)
+    release_date = db.Column(db.DateTime)
     actors = db.relationship(
         'Actor',
         secondary=movie_actor,
@@ -19,7 +19,7 @@ class Movie(db.Model):
         backref='movie',
         lazy=True)
 
-    def __init__(self, title, release_date):
+    def __init__(self, title, release_date=None):
         """
         set class variables
         """
@@ -32,7 +32,7 @@ class Movie(db.Model):
             'title': self.title
         }
 
-    def create_movie(title, release_date):
+    def create_movie(title):
         """Create new movie
 
         Args:
@@ -42,8 +42,7 @@ class Movie(db.Model):
             int: the id of the movie inserted
         """
         movie = Movie(
-            title=title,
-            release_date=release_date
+            title=title
         )
         db.session.add(movie)
         db.session.commit()

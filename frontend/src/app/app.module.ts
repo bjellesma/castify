@@ -26,7 +26,8 @@ import { AddGenreComponent } from './components/pages/add-genre/add-genre.compon
 import { UpdateGenreComponent } from './components/pages/update-genre/update-genre.component';
 import { MovieformComponent } from './components/pages/partials/form/movieform/movieform.component';
 //auth service
-import {AuthService} from './services/AuthService/auth.service'
+import {AuthService} from './services/AuthService/auth.service';
+import { GenreformComponent } from './components/pages/partials/genreform/genreform.component'
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {AuthService} from './services/AuthService/auth.service'
     UpdateMovieComponent,
     AddGenreComponent,
     UpdateGenreComponent,
-    MovieformComponent
+    MovieformComponent,
+    GenreformComponent
   ],
   imports: [
     BrowserModule,

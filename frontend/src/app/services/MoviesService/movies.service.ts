@@ -8,7 +8,10 @@ import {Movies, Movie} from '../../models/movies'
 
 @Injectable()
 export class MoviesService {
-  constructor(private http:HttpClient, private auth:AuthService) { }
+  authenticated:boolean
+  constructor(private http:HttpClient, private auth:AuthService) { 
+    this.authenticated = this.auth.authenticated
+  }
   httpOptions = {
     headers: new HttpHeaders({
       'content-Type': 'application/json',
@@ -23,7 +26,7 @@ export class MoviesService {
   }
 
   getMovieById(mid:number):Observable<Movie>{
-    return this.http.get<Movie>(`http://127.0.0.1:5000/api/movies/${mid}`) 
+    return this.http.get<Movie>(`http://127.0.0.1:5000/api/movies/${mid}`, this.httpOptions) 
   }
 
   addMovie(movie):Observable<Movie>{
@@ -37,7 +40,7 @@ export class MoviesService {
 
   updateMovie(movie):Observable<any>{
     let data = this.http.patch<Movies>(
-      `http://127.0.0.1:5000/api/actors/${movie.id}`,
+      `http://127.0.0.1:5000/api/movies/${movie.id}`,
       movie,
       this.httpOptions
     )
@@ -45,6 +48,6 @@ export class MoviesService {
   }
 
   deleteMovie(mid):Observable<any>{
-    return this.http.delete(`http://127.0.0.1:5000/api/actors/${mid}`, this.httpOptions)
+    return this.http.delete(`http://127.0.0.1:5000/api/movies/${mid}`, this.httpOptions)
   }
 }

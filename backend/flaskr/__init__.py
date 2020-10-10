@@ -31,7 +31,6 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     app.config.from_object('config')
-    # TODO will it
     # Necessary because our frontend connects with a different port
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 

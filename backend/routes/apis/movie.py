@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 from auth import requires_auth
 from routes.routing_functions import validate_against_api
 from models.movies import Movie
-from voluptuous import Schema, Required
+from voluptuous import Schema, Required, Optional
 
 movie_routes = Blueprint('movie_routes', __name__)
 
@@ -11,12 +11,13 @@ movie_routes = Blueprint('movie_routes', __name__)
 # TODO validating as str for now
 movie_schema = Schema({
     Required('title'): str,
-    Required('release_date'): str
+    Optional('release_date'): str
 })
 
 
 @movie_routes.route('/api/movies', methods=['GET'])
-@cross_origin()
+@requires_auth('read:movies')
+# @cross_origin()
 def read_all_movies():
     """Read all movies in database
 
@@ -27,6 +28,7 @@ def read_all_movies():
                 in the database
         }
     """
+    print(f'headers: {request.headers.get("Authorization")}')
     try:
         movies = Movie.query.all()
 
@@ -42,8 +44,9 @@ def read_all_movies():
 
 @movie_routes.route('/api/movies/<int:movie_id>', methods=['GET'])
 @requires_auth('read:movies')
-@cross_origin()
+# @cross_origin()
 def read_single_movie(movie_id):
+    
     movie = Movie.query.get(movie_id)
     if not movie:
         abort(404, description=f"No movie was found for id {movie_id}")
@@ -74,10 +77,8 @@ def create_movie():
     if api_errors:
         abort(400, description=api_errors)
     title = data["title"]
-    release_data = data["release_date"]
     movie_id = Movie.create_movie(
-        title=title,
-        release_date=release_data
+        title=title
     )
     return jsonify({
         "success": True,

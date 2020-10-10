@@ -1,8 +1,19 @@
 <div class="basic-component">
-    <!-- <div class="add-movie" *ngIf="auth.isAuthenticated$ | async">
+    <div class="add-movie" *ngIf="authenticated">
         <button class="btn-link" routerLink="/add-movie">Add Movie</button>
-    </div> -->
-    <div class="movie-card" *ngFor="let movie of movies">
-        {{movie.title}}
     </div>
+    <div id="movies-view">
+        <div class="movie-card" *ngFor="let movie of movies">
+            <img class="movie-headshot" src="http://placekitten.com/400/200">
+            <div class="movie-stats">
+                <h3>Name: {{movie.title}}</h3>
+            </div>
+            <!-- TODO movie-options should only be available for authenticated users -->
+            <div class="movie-options">
+                <button class="btn btn-update" routerLink="/update-movie" [queryParams]="{'movie_id': movie.id}">Update</button>
+                <button class="btn btn-delete" (click)="deleteMovie(movie.id)">Delete</button>
+            </div>
+        </div>
+    </div>
+    
 </div>
