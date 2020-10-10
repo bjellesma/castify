@@ -10,8 +10,10 @@
             </div>
             <!-- TODO movie-options should only be available for authenticated users -->
             <div class="movie-options">
-                <button class="btn btn-update" routerLink="/update-movie" [queryParams]="{'movie_id': movie.id}">Update</button>
-                <button class="btn btn-delete" (click)="deleteMovie(movie.id)">Delete</button>
+                <ng-container *ngIf="authenticated;">
+                    <button class="btn btn-update" routerLink="/update-movie" [queryParams]="{'movie_id': movie.id}">Update</button>
+                    <button class="btn btn-delete" (click)="deleteMovie(movie.id)">Delete</button>
+                </ng-container>
             </div>
         </div>
     </div>
