@@ -1,7 +1,7 @@
 <div class="basic-component">
-    <div class="add-movie" *ngIf="auth.isAuthenticated$ | async">
+    <!-- <div class="add-movie" *ngIf="auth.isAuthenticated$ | async">
         <button class="btn-link" routerLink="/add-movie">Add Movie</button>
-    </div>
+    </div> -->
     <div class="movie-card" *ngFor="let movie of movies">
         {{movie.title}}
     </div>

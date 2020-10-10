@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // import the http module so that we can make calls out to an API
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule} from '@angular/common/http';
+// Import the HTTP interceptor from the Auth0 Angular SDK
 // import forms module
 import{FormsModule} from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
@@ -16,8 +17,6 @@ import { NavComponent } from './components/layout/header/nav/nav.component';
 import { AddActorComponent } from './components/pages/add-actor/add-actor.component';
 import { UpdateActorComponent } from './components/pages/update-actor/update-actor.component';
 import { ActorformComponent } from './components/pages/partials/form/actorform/actorform.component';
-// Import the module from the SDK
-import { AuthModule } from '@auth0/auth0-angular';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { MoviesComponent } from './components/pages/movies/movies.component';
 import { GenresComponent } from './components/pages/genres/genres.component';
@@ -26,6 +25,8 @@ import { UpdateMovieComponent } from './components/pages/update-movie/update-mov
 import { AddGenreComponent } from './components/pages/add-genre/add-genre.component';
 import { UpdateGenreComponent } from './components/pages/update-genre/update-genre.component';
 import { MovieformComponent } from './components/pages/partials/form/movieform/movieform.component';
+//auth service
+import {AuthService} from './services/AuthService/auth.service'
 
 @NgModule({
   declarations: [
@@ -53,14 +54,11 @@ import { MovieformComponent } from './components/pages/partials/form/movieform/m
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    // Import the module into the application, with configuration
-    AuthModule.forRoot({
-      domain: 'dev-cpb64ukj.us.auth0.com',
-      clientId: 'caolVXfgEL9z2t67IMOhcl10alFoRDQs',
-    }),
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

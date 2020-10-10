@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService } from '../../../../services/AuthService/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -7,25 +7,20 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  user = null
-  authenticated
+  authenticated:boolean;
 
   constructor(public auth: AuthService) {}
 
-  ngOnInit(): void {
-    this.auth.user$.subscribe(data => {
-      this.user = data
-    })
-  }
+  ngOnInit(): void {}
 
   login(): void {
     // Call this to redirect the user to the login page
-    this.auth.loginWithRedirect();
+    this.auth.login();
   }
 
   logout(): void {
     // Call this to log the user out of the application
-    this.auth.logout({ returnTo: window.location.origin });
+    this.auth.logout();
   }
 
 }

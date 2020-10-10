@@ -5,12 +5,11 @@
             Home
         </li>
         <!-- only authorized users will see this -->
-        <ng-container *ngIf="user; else unauth">
-            <li routerLink="/profile">{{user.name}}</li>
+        <ng-container *ngIf="this.auth.isLoggedIn; else needAuth">
+            <li routerLink="/profile">{{this.auth.userProfile.name}}</li>
             <li (click)="logout()" >Logout</li>
-            <li>{{user|json}}</li>
         </ng-container>
-        <ng-template #unauth>
+        <ng-template #needAuth>
             <li (click)="login()">Login</li>
         </ng-template>
         <li routerLink="/about">

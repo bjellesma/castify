@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '@auth0/auth0-angular';
+import { AuthGuard } from './guard/auth/auth.guard';
 import { HomeComponent } from 'src/app/components/pages/home/home.component'
 import { AboutComponent } from './components/pages/about/about.component';
 import { ActorsComponent } from './components/pages/actors/actors.component';
@@ -13,12 +13,17 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
 import { UpdateActorComponent } from './components/pages/update-actor/update-actor.component';
 import { UpdateGenreComponent } from './components/pages/update-genre/update-genre.component';
 import { UpdateMovieComponent } from './components/pages/update-movie/update-movie.component';
+import { CallbackComponent } from './components/pages/callback/callback.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'callback',
+    component: CallbackComponent
   },
   {
     path: 'about',
@@ -70,6 +75,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

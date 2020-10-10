@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {AuthService} from '../AuthService/auth.service'
 import { Observable } from 'rxjs'
 import {Movies, Movie} from '../../models/movies'
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'content-Type': 'application/json'
-  })
-}
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class MoviesService {
+  constructor(private http:HttpClient, private auth:AuthService) { }
+  httpOptions = {
+    headers: new HttpHeaders({
+      'content-Type': 'application/json',
+      'Authorization': `Bearer ${this.auth.accessToken}`
+    })
+  }
 
-  constructor(private http:HttpClient) { }
+  
 
   getMovies():Observable<Movies>{
-    return this.http.get<Movies>('http://127.0.0.1:5000/api/movies') 
+    return this.http.get<Movies>('http://127.0.0.1:5000/api/movies', this.httpOptions) 
   }
 
   getMovieById(mid:number):Observable<Movie>{
@@ -28,7 +30,7 @@ export class MoviesService {
     let data = this.http.post<Movie>(
       'http://127.0.0.1:5000/api/movies',
       movie,
-      httpOptions
+      this.httpOptions
     )
     return data
   }
@@ -37,12 +39,12 @@ export class MoviesService {
     let data = this.http.patch<Movies>(
       `http://127.0.0.1:5000/api/actors/${movie.id}`,
       movie,
-      httpOptions
+      this.httpOptions
     )
     return data
   }
 
   deleteMovie(mid):Observable<any>{
-    return this.http.delete(`http://127.0.0.1:5000/api/actors/${mid}`, httpOptions)
+    return this.http.delete(`http://127.0.0.1:5000/api/actors/${mid}`, this.httpOptions)
   }
 }
