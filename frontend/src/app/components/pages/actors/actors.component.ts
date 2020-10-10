@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router'
 import { ActorsService } from '../../../services/ActorsService/actors.service'
 
 @Component({
@@ -7,10 +8,12 @@ import { ActorsService } from '../../../services/ActorsService/actors.service'
   styleUrls: ['./actors.component.css']
 })
 export class ActorsComponent implements OnInit {
+  authenticated:boolean
   actors;
-  constructor(private actorsService:ActorsService) { }
+  constructor(private actorsService:ActorsService,private router: Router) { }
 
   ngOnInit(): void {
+    this.authenticated = this.actorsService.authenticated
     this.actorsService.getActors().subscribe(data => {
       this.actors = data.actors
     })
@@ -18,7 +21,9 @@ export class ActorsComponent implements OnInit {
 
     //TODO handle delete better
   deleteActor(aid): void {
-    this.actorsService.deleteActor(aid).subscribe()
+    this.actorsService.deleteActor(aid).subscribe(data => {
+      this.router.navigate(['/actors']);
+    })
   }
 
 }

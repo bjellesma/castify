@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
-import {Actors} from '../../models/actors'
-import {Actor} from '../../models/actor'
+import {Actors, Actor} from '../../models/actors'
 import { Observable } from 'rxjs'
+import { AuthService } from '../AuthService/auth.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,8 +14,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ActorsService {
-
-  constructor(private http:HttpClient) { }
+  authenticated:boolean
+  constructor(private http:HttpClient, private auth:AuthService) {
+    this.authenticated = this.auth.authenticated
+  }
 
   getActors():Observable<Actors>{
     return this.http.get<Actors>('http://127.0.0.1:5000/api/actors') 

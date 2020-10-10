@@ -15,8 +15,6 @@ genre_schema = Schema({
 
 
 @genre_routes.route('/api/genres', methods=['GET'])
-@requires_auth('read:genres')
-# @cross_origin()
 def read_all_genres():
     """Read all genres in database
 
@@ -41,8 +39,6 @@ def read_all_genres():
 
 
 @genre_routes.route('/api/genres/<int:genre_id>', methods=['GET'])
-@requires_auth('read:genres')
-# @cross_origin()
 def read_single_genre(genre_id):
     genre = Genre.query.get(genre_id)
     if not genre:

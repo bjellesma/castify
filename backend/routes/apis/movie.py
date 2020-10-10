@@ -16,8 +16,6 @@ movie_schema = Schema({
 
 
 @movie_routes.route('/api/movies', methods=['GET'])
-@requires_auth('read:movies')
-# @cross_origin()
 def read_all_movies():
     """Read all movies in database
 
@@ -28,7 +26,6 @@ def read_all_movies():
                 in the database
         }
     """
-    print(f'headers: {request.headers.get("Authorization")}')
     try:
         movies = Movie.query.all()
 
@@ -43,8 +40,6 @@ def read_all_movies():
 
 
 @movie_routes.route('/api/movies/<int:movie_id>', methods=['GET'])
-@requires_auth('read:movies')
-# @cross_origin()
 def read_single_movie(movie_id):
     
     movie = Movie.query.get(movie_id)
