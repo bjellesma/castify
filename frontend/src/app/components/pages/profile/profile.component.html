@@ -1,0 +1,5 @@
+<div class="basic-component" *ngIf="this.auth.isLoggedIn">
+    <img src="{{this.auth.userProfile.picture}}">
+    <label>Name</label> {{this.auth.userProfile.name}}
+    <label>Email</label> {{this.auth.userProfile.email}}
+</div>

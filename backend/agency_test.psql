@@ -34,8 +34,8 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 --
 
 CREATE TYPE public.gender AS ENUM (
-	'male',
-	'female'
+    'male',
+    'female'
 );
 
 
@@ -50,10 +50,10 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE public.actor (
-	id integer NOT NULL,
-	name character varying NOT NULL,
-	age integer NOT NULL,
-	gender public.gender
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    age integer NOT NULL,
+    gender public.gender
 );
 
 
@@ -64,11 +64,11 @@ ALTER TABLE public.actor OWNER TO postgres;
 --
 
 CREATE SEQUENCE public.actor_id_seq
-	START WITH 1
-	INCREMENT BY 1
-	NO MINVALUE
-	NO MAXVALUE
-	CACHE 1;
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
 ALTER TABLE public.actor_id_seq OWNER TO postgres;
@@ -81,23 +81,12 @@ ALTER SEQUENCE public.actor_id_seq OWNED BY public.actor.id;
 
 
 --
--- Name: alembic_version; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.alembic_version (
-	version_num character varying(32) NOT NULL
-);
-
-
-ALTER TABLE public.alembic_version OWNER TO postgres;
-
---
 -- Name: genre; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.genre (
-	id integer NOT NULL,
-	name character varying NOT NULL
+    id integer NOT NULL,
+    name character varying NOT NULL
 );
 
 
@@ -108,11 +97,11 @@ ALTER TABLE public.genre OWNER TO postgres;
 --
 
 CREATE SEQUENCE public.genre_id_seq
-	START WITH 1
-	INCREMENT BY 1
-	NO MINVALUE
-	NO MAXVALUE
-	CACHE 1;
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
 ALTER TABLE public.genre_id_seq OWNER TO postgres;
@@ -129,9 +118,9 @@ ALTER SEQUENCE public.genre_id_seq OWNED BY public.genre.id;
 --
 
 CREATE TABLE public.movie (
-	id integer NOT NULL,
-	title character varying NOT NULL,
-	release_date timestamp without time zone NOT NULL
+    id integer NOT NULL,
+    title character varying NOT NULL,
+    release_date timestamp without time zone NOT NULL
 );
 
 
@@ -142,8 +131,8 @@ ALTER TABLE public.movie OWNER TO postgres;
 --
 
 CREATE TABLE public.movie_actor (
-	movie_id integer NOT NULL,
-	actor_id integer NOT NULL
+    movie_id integer NOT NULL,
+    actor_id integer NOT NULL
 );
 
 
@@ -154,8 +143,8 @@ ALTER TABLE public.movie_actor OWNER TO postgres;
 --
 
 CREATE TABLE public.movie_genre (
-	movie_id integer NOT NULL,
-	genre_id integer NOT NULL
+    movie_id integer NOT NULL,
+    genre_id integer NOT NULL
 );
 
 
@@ -166,11 +155,11 @@ ALTER TABLE public.movie_genre OWNER TO postgres;
 --
 
 CREATE SEQUENCE public.movie_id_seq
-	START WITH 1
-	INCREMENT BY 1
-	NO MINVALUE
-	NO MAXVALUE
-	CACHE 1;
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
 ALTER TABLE public.movie_id_seq OWNER TO postgres;
@@ -217,16 +206,7 @@ COPY public.actor (id, name, age, gender) FROM stdin;
 -- Name: actor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.actor_id_seq', 3, false);
-
-
---
--- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.alembic_version (version_num) FROM stdin;
-5c8b99f6be7a
-\.
+SELECT pg_catalog.setval('public.actor_id_seq', 3, true);
 
 
 --
@@ -284,15 +264,7 @@ SELECT pg_catalog.setval('public.movie_id_seq', 3, true);
 --
 
 ALTER TABLE ONLY public.actor
-	ADD CONSTRAINT actor_pkey PRIMARY KEY (id);
-
-
---
--- Name: alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.alembic_version
-	ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+    ADD CONSTRAINT actor_pkey PRIMARY KEY (id);
 
 
 --
@@ -300,7 +272,7 @@ ALTER TABLE ONLY public.alembic_version
 --
 
 ALTER TABLE ONLY public.genre
-	ADD CONSTRAINT genre_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT genre_pkey PRIMARY KEY (id);
 
 
 --
@@ -308,7 +280,7 @@ ALTER TABLE ONLY public.genre
 --
 
 ALTER TABLE ONLY public.movie_actor
-	ADD CONSTRAINT movie_actor_pkey PRIMARY KEY (movie_id, actor_id);
+    ADD CONSTRAINT movie_actor_pkey PRIMARY KEY (movie_id, actor_id);
 
 
 --
@@ -316,7 +288,7 @@ ALTER TABLE ONLY public.movie_actor
 --
 
 ALTER TABLE ONLY public.movie_genre
-	ADD CONSTRAINT movie_genre_pkey PRIMARY KEY (movie_id, genre_id);
+    ADD CONSTRAINT movie_genre_pkey PRIMARY KEY (movie_id, genre_id);
 
 
 --
@@ -324,7 +296,7 @@ ALTER TABLE ONLY public.movie_genre
 --
 
 ALTER TABLE ONLY public.movie
-	ADD CONSTRAINT movie_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT movie_pkey PRIMARY KEY (id);
 
 
 --
@@ -332,7 +304,7 @@ ALTER TABLE ONLY public.movie
 --
 
 ALTER TABLE ONLY public.movie_actor
-	ADD CONSTRAINT movie_actor_actor_id_fkey FOREIGN KEY (actor_id) REFERENCES public.actor(id);
+    ADD CONSTRAINT movie_actor_actor_id_fkey FOREIGN KEY (actor_id) REFERENCES public.actor(id);
 
 
 --
@@ -340,7 +312,7 @@ ALTER TABLE ONLY public.movie_actor
 --
 
 ALTER TABLE ONLY public.movie_actor
-	ADD CONSTRAINT movie_actor_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movie(id);
+    ADD CONSTRAINT movie_actor_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movie(id);
 
 
 --
@@ -348,7 +320,7 @@ ALTER TABLE ONLY public.movie_actor
 --
 
 ALTER TABLE ONLY public.movie_genre
-	ADD CONSTRAINT movie_genre_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genre(id);
+    ADD CONSTRAINT movie_genre_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genre(id);
 
 
 --
@@ -356,7 +328,7 @@ ALTER TABLE ONLY public.movie_genre
 --
 
 ALTER TABLE ONLY public.movie_genre
-	ADD CONSTRAINT movie_genre_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movie(id);
+    ADD CONSTRAINT movie_genre_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movie(id);
 
 
 --

@@ -1,0 +1,8 @@
+<form id="movieform" class="form" (ngSubmit)="onSubmit()">
+    <div class="form-element">
+        <label for="fullName">Please enter the title of the movie: </label>
+        <input type="text" name="title" id="title" value="123" [(ngModel)]="title">
+    </div>
+    <input *ngIf="formType == 'add'" type="submit" value="Add Movie" class="btn btn-submit">
+    <input *ngIf="formType == 'update'" type="submit" value="Update Movie" class="btn btn-submit">
+</form>

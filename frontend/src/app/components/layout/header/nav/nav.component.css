@@ -1,0 +1,22 @@
+nav{
+    border-bottom:1px solid var(--border-color);
+}
+.nav-wrapper{
+    display:flex;
+    justify-content: left;
+    width: 80%;
+    margin: auto;
+    padding: auto;
+    
+}
+li {
+    display: block;
+    padding:1em;
+    list-style-type: none;
+    background: var(--main-bg-color);
+    color:var(--main-text-color);
+}
+li:hover{
+    background-color: #add8e6;
+    cursor: pointer;
+}

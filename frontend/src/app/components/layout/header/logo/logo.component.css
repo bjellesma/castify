@@ -1,0 +1,9 @@
+
+.logo-wrapper{
+    display:grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 10em;
+    background-color: var(--secondary-background-color);
+    color: var(--main-text-color)
+}

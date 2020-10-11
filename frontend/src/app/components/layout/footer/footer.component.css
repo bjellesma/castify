@@ -1,0 +1,12 @@
+.footer-component{
+    position:fixed;
+    left:0;
+    bottom:0;
+    display:flex;
+    justify-content: center;
+    padding-bottom: 1em;
+    padding-left:1em;
+    color:var(--main-text-color);
+    background-color: #000;
+    width:100%;
+}

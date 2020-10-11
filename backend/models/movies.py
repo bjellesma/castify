@@ -6,12 +6,20 @@ from routes.routing_functions import flask_abort
 class Movie(db.Model):
     __tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
-    title=db.Column(db.String, nullable=False)
-    release_date = db.Column(db.DateTime, nullable=False)
-    actors = db.relationship('Actor', secondary=movie_actor, backref='movie', lazy=True)
-    genres = db.relationship('Genre', secondary=movie_genre, backref='movie', lazy=True)
+    title = db.Column(db.String, nullable=False)
+    release_date = db.Column(db.DateTime)
+    actors = db.relationship(
+        'Actor',
+        secondary=movie_actor,
+        backref='movie',
+        lazy=True)
+    genres = db.relationship(
+        'Genre',
+        secondary=movie_genre,
+        backref='movie',
+        lazy=True)
 
-    def __init__(self, title, release_date):
+    def __init__(self, title, release_date=None):
         """
         set class variables
         """
@@ -24,7 +32,7 @@ class Movie(db.Model):
             'title': self.title
         }
 
-    def create_movie(title, release_date):
+    def create_movie(title):
         """Create new movie
 
         Args:
@@ -34,12 +42,11 @@ class Movie(db.Model):
             int: the id of the movie inserted
         """
         movie = Movie(
-            title=title,
-            release_date=release_date
+            title=title
         )
         db.session.add(movie)
         db.session.commit()
-        return movie.id 
+        return movie.id
 
     def update_movie(insert_data):
         """update movie object in database
@@ -58,15 +65,20 @@ class Movie(db.Model):
         movie = Movie.query.get(movie_id)
         if not movie:
             flask_abort(404, message=f"No movie was found for id {movie_id}")
-        movie.title = insert_data.get('title') if insert_data.get('title') else movie.title
-        movie.release_date = insert_data.get('release_date') if insert_data.get('release_date') else movie.release_date
+        movie.title = insert_data.get(
+            'title') if insert_data.get('title') else movie.title
+        movie.release_date = insert_data.get(
+            'release_date') if insert_data.get(
+            'release_date') else movie.release_date
         db.session.commit()
         return movie
 
     def delete_movie(movie_id):
         movie = Movie.query.get(movie_id)
         if not movie:
-            flask_abort(status_code=404, message=f"No movie was found for id {movie_id}")
+            flask_abort(
+                status_code=404,
+                message=f"No movie was found for id {movie_id}")
         db.session.delete(movie)
         db.session.commit()
         return movie.id

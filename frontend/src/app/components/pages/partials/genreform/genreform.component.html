@@ -1,0 +1,8 @@
+<form id="genreform" class="form" (ngSubmit)="onSubmit()">
+    <div class="form-element">
+        <label for="fullName">Please enter the name of the genre: </label>
+        <input type="text" name="name" id="name" value="123" [(ngModel)]="name">
+    </div>
+    <input *ngIf="formType == 'add'" type="submit" value="Add Genre" class="btn btn-submit">
+    <input *ngIf="formType == 'update'" type="submit" value="Update Genre" class="btn btn-submit">
+</form>

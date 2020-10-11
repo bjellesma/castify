@@ -1,0 +1,21 @@
+<div class="basic-component">
+    <div class="add-genre" *ngIf="authenticated">
+        <button class="btn-link" routerLink="/add-genre">Add Genre</button>
+    </div>
+    <div id="genres-view">
+        <div class="genre-card" *ngFor="let genre of genres">
+            <img class="genre-headshot" src="http://placekitten.com/400/200">
+            <div class="genre-stats">
+                <h3>Name: {{genre.name}}</h3>
+            </div>
+            <!-- TODO genre-options should only be available for authenticated users -->
+            <div class="genre-options">
+                <ng-container *ngIf="authenticated;">
+                    <button class="btn btn-update" routerLink="/update-genre" [queryParams]="{'genre_id': genre.id}">Update</button>
+                    <button class="btn btn-delete" (click)="deleteGenre(genre.id)">Delete</button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    
+</div>

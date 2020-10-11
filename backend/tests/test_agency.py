@@ -3,7 +3,9 @@ import unittest
 from flask_sqlalchemy import SQLAlchemy
 from secure import TEST_CONNECT_STRING
 from models.models import setup_db
-from secure import CASTING_ASSISTANT_JWT, CASTING_DIRECTOR_JWT, EXECUTIVE_PRODUCER_JWT
+from secure import (
+    CASTING_ASSISTANT_JWT, CASTING_DIRECTOR_JWT, EXECUTIVE_PRODUCER_JWT
+    )
 
 casting_assistant_headers = {
     'Content-Type': 'application/json',
@@ -24,6 +26,7 @@ public_headers = {
     'Content-Type': 'application/json'
 }
 
+
 class AgencyTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -38,7 +41,7 @@ class AgencyTestCase(unittest.TestCase):
             self.db.init_app(self.app)
             # create all tables
             self.db.create_all()
-    
+
     def tearDown(self):
         """Executed after reach test"""
         pass
@@ -50,4 +53,3 @@ class AgencyTestCase(unittest.TestCase):
     def test_init_404(self):
         res = self.client().get('/apis')
         self.assertEqual(res.status_code, 404)
-
