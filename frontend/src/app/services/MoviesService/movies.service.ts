@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import {AuthService} from '../AuthService/auth.service'
 import { Observable } from 'rxjs'
 import {Movies, Movie} from '../../models/movies'
-
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
@@ -22,16 +22,16 @@ export class MoviesService {
   
 
   getMovies():Observable<Movies>{
-    return this.http.get<Movies>('http://127.0.0.1:5000/api/movies', this.httpOptions) 
+    return this.http.get<Movies>(`${environment.api_url}/api/movies`, this.httpOptions) 
   }
 
   getMovieById(mid:number):Observable<Movie>{
-    return this.http.get<Movie>(`http://127.0.0.1:5000/api/movies/${mid}`, this.httpOptions) 
+    return this.http.get<Movie>(`${environment.api_url}/api/movies/${mid}`, this.httpOptions) 
   }
 
   addMovie(movie):Observable<Movie>{
     let data = this.http.post<Movie>(
-      'http://127.0.0.1:5000/api/movies',
+      `${environment.api_url}/api/movies`,
       movie,
       this.httpOptions
     )
@@ -40,7 +40,7 @@ export class MoviesService {
 
   updateMovie(movie):Observable<any>{
     let data = this.http.patch<Movies>(
-      `http://127.0.0.1:5000/api/movies/${movie.id}`,
+      `${environment.api_url}/api/movies/${movie.id}`,
       movie,
       this.httpOptions
     )
@@ -48,6 +48,6 @@ export class MoviesService {
   }
 
   deleteMovie(mid):Observable<any>{
-    return this.http.delete(`http://127.0.0.1:5000/api/movies/${mid}`, this.httpOptions)
+    return this.http.delete(`${environment.api_url}/api/movies/${mid}`, this.httpOptions)
   }
 }

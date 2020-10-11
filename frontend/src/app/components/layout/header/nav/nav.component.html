@@ -1,28 +1,33 @@
 <nav>
-    <ul class="nav-wrapper">
-        <!-- TODO figure out a way to make these dynamic -->
-        <li routerLink="/">
-            Home
-        </li>
-        <!-- only authorized users will see this -->
-        <ng-container *ngIf="this.auth.isLoggedIn; else needAuth">
-            <li routerLink="/profile">{{this.auth.userProfile.name}}</li>
-            <li (click)="logout()" >Logout</li>
-        </ng-container>
-        <ng-template #needAuth>
-            <li (click)="login()">Login</li>
-        </ng-template>
-        <li routerLink="/about">
-            About
-        </li>
-        <li routerLink="/actors">
-            Actors
-        </li>
-        <li routerLink="/movies">
-            Movies
-        </li>
-        <li routerLink="/genres">
-            Genres
-        </li>
-    </ul>
+    <div class="nav-wrapper">
+        <ul class="nav-links">
+            <li routerLink="/">
+                Home
+            </li>
+            
+            <ng-template #needAuth>
+                <li (click)="login()">Login</li>
+            </ng-template>
+            <li routerLink="/about">
+                About
+            </li>
+            <li routerLink="/actors">
+                Actors
+            </li>
+            <li routerLink="/movies">
+                Movies
+            </li>
+            <li routerLink="/genres">
+                Genres
+            </li>
+        </ul>
+        
+        <ul class="login-links">
+            <!-- only authorized users will see this -->
+            <ng-container *ngIf="this.auth.isLoggedIn; else needAuth">
+                <li routerLink="/profile">{{this.auth.userProfile.name}}</li>
+                <li (click)="logout()" >Logout</li>
+            </ng-container>
+        </ul>
+    </div>
 </nav>

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import {AuthService} from '../AuthService/auth.service'
 import { Observable } from 'rxjs'
 import {Genres, Genre} from '../../models/genres'
-
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
@@ -22,16 +22,16 @@ export class GenresService {
   
 
   getGenres():Observable<Genres>{
-    return this.http.get<Genres>('http://127.0.0.1:5000/api/genres', this.httpOptions) 
+    return this.http.get<Genres>(`${environment.api_url}/api/genres`, this.httpOptions) 
   }
 
   getGenreById(gid:number):Observable<Genre>{
-    return this.http.get<Genre>(`http://127.0.0.1:5000/api/genres/${gid}`, this.httpOptions) 
+    return this.http.get<Genre>(`${environment.api_url}/api/genres/${gid}`, this.httpOptions) 
   }
 
   addGenre(genre):Observable<Genre>{
     let data = this.http.post<Genre>(
-      'http://127.0.0.1:5000/api/genres',
+      `${environment.api_url}api/genres`,
       genre,
       this.httpOptions
     )
@@ -40,7 +40,7 @@ export class GenresService {
 
   updateGenre(genre):Observable<any>{
     let data = this.http.patch<Genres>(
-      `http://127.0.0.1:5000/api/genres/${genre.id}`,
+      `${environment.api_url}/api/genres/${genre.id}`,
       genre,
       this.httpOptions
     )
@@ -48,6 +48,6 @@ export class GenresService {
   }
 
   deleteGenre(gid):Observable<any>{
-    return this.http.delete(`http://127.0.0.1:5000/api/genres/${gid}`, this.httpOptions)
+    return this.http.delete(`${environment.api_url}/api/genres/${gid}`, this.httpOptions)
   }
 }

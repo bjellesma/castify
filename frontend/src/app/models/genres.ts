@@ -4,6 +4,6 @@ export class Genres {
 }
 
 export class Genre {
-    id:number;
-    name:string
+    genre:object;
+    success:boolean;
 }

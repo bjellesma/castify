@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 import {Actors, Actor} from '../../models/actors'
 import { Observable } from 'rxjs'
 import { AuthService } from '../AuthService/auth.service';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,16 +21,16 @@ export class ActorsService {
   }
 
   getActors():Observable<Actors>{
-    return this.http.get<Actors>('http://127.0.0.1:5000/api/actors') 
+    return this.http.get<Actors>(`${environment.api_url}/api/actors`) 
   }
 
   getActorById(aid:number):Observable<Actor>{
-    return this.http.get<Actor>(`http://127.0.0.1:5000/api/actors/${aid}`) 
+    return this.http.get<Actor>(`${environment.api_url}/api/actors/${aid}`) 
   }
 
   addActor(actor):Observable<Actors>{
     let data = this.http.post<Actors>(
-      'http://127.0.0.1:5000/api/actors',
+      `${environment.api_url}/api/actors`,
       actor,
       httpOptions
     )
@@ -38,7 +39,7 @@ export class ActorsService {
 
   updateActor(actor):Observable<any>{
     let data = this.http.patch<Actors>(
-      `http://127.0.0.1:5000/api/actors/${actor.id}`,
+      `${environment.api_url}/api/actors/${actor.id}`,
       actor,
       httpOptions
     )
@@ -47,6 +48,6 @@ export class ActorsService {
   }
 
   deleteActor(aid):Observable<any>{
-    return this.http.delete(`http://127.0.0.1:5000/api/actors/${aid}`, httpOptions)
+    return this.http.delete(`${environment.api_url}/${aid}`, httpOptions)
   }
 }
