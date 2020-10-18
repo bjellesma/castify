@@ -31,7 +31,7 @@ export class GenresService {
 
   addGenre(genre):Observable<Genre>{
     let data = this.http.post<Genre>(
-      `${environment.api_url}api/genres`,
+      `${environment.api_url}/api/genres`,
       genre,
       this.httpOptions
     )
