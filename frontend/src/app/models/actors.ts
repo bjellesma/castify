@@ -4,7 +4,6 @@ export class Actors {
 }
 
 export class Actor {
-    name:string;
-    age:number;
-    gender:string;
+    actor:object;
+    success:boolean
 }

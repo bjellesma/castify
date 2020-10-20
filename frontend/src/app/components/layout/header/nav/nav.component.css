@@ -3,11 +3,17 @@ nav{
 }
 .nav-wrapper{
     display:flex;
-    justify-content: left;
+    justify-content: space-between;
     width: 80%;
     margin: auto;
     padding: auto;
     
+}
+.nav-links{
+    display:flex;
+}
+.login-links{
+    display:flex;
 }
 li {
     display: block;

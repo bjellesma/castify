@@ -4,5 +4,6 @@ export class Movies {
 }
 
 export class Movie {
-    title:string
+    movie:object;
+    success:boolean;
 }

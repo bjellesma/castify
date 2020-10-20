@@ -9,8 +9,10 @@ export const environment = {
     domain: 'dev-cpb64ukj.us.auth0.com',
     audience: 'https://127.0.0.1:5000',
     redirect: 'http://localhost:4200/callback',
-    scope: 'openid profile email'
-  }
+    logout: 'http://localhost:4200',
+    scope: 'openid profile email',
+  },
+  api_url: 'http://127.0.0.1:5000'
 };
 
 /*
