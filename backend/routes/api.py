@@ -11,3 +11,16 @@ def get_index():
         'success': True,
         'message': 'Woohoo, the api is working!'
     })
+
+
+# This decorator is needed for angular
+@api_routes.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add(
+        'Access-Control-Allow-Headers',
+        'Content-Type,Authorization,true')
+    response.headers.add(
+        'Access-Control-Allow-Methods',
+        'GET,PATCH,POST,DELETE,OPTIONS')
+    return response
