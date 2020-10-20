@@ -134,7 +134,6 @@ def delete_single_movie(movie_id):
 
 @movie_routes.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add(
         'Access-Control-Allow-Headers',
         'Content-Type,Authorization,true')
