@@ -53,7 +53,6 @@ def read_single_movie(movie_id):
 
 @movie_routes.route('/api/movies', methods=['POST'])
 @requires_auth('create:movies')
-@cross_origin()
 def create_movie():
     """Insert Movie into database if validation is passed
 

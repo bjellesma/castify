@@ -32,7 +32,7 @@ def create_app(test_config=None):
     setup_db(app)
     app.config.from_object('config')
     # Necessary because our frontend connects with a different port
-    CORS(app, resources={"*": {"origins": "*"}})
+    CORS(app)
 
     app.register_blueprint(api_routes)
     app.register_blueprint(movie_routes)
