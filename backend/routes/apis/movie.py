@@ -131,3 +131,14 @@ def delete_single_movie(movie_id):
         "success": True,
         "movie_id": movie_id
     })
+
+@movie_routes.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add(
+        'Access-Control-Allow-Headers',
+        'Content-Type,Authorization,true')
+    response.headers.add(
+        'Access-Control-Allow-Methods',
+        'GET,PATCH,POST,DELETE,OPTIONS')
+    return response
