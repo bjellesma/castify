@@ -12,7 +12,7 @@ export const environment = {
     logout: 'http://localhost:4200',
     scope: 'openid profile email',
   },
-  api_url: 'http://127.0.0.1:5000'
+  api_url: 'https://castifyio.herokuapp.com'
 };
 
 /*

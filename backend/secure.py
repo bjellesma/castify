@@ -32,3 +32,11 @@ if not str_to_bool(DEPLOY):
     CASTING_ASSISTANT_JWT = os.environ["CASTING_ASSISTANT_JWT"]
     CASTING_DIRECTOR_JWT = os.environ["CASTING_DIRECTOR_JWT"]
     EXECUTIVE_PRODUCER_JWT = os.environ["EXECUTIVE_PRODUCER_JWT"]
+
+# Mail
+MAIL_SERVER = os.environ.get('MAIL_SERVER')
+MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+MAIL_USE_TLS = True
+MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+ADMINS = ['billjellesma.test@gmail.com']

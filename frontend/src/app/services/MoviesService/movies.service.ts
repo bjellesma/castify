@@ -35,6 +35,7 @@ export class MoviesService {
       movie,
       this.httpOptions
     )
+    console.log(data)
     return data
   }
 
