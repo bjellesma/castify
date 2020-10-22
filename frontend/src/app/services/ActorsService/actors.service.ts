@@ -5,12 +5,6 @@ import { Observable } from 'rxjs'
 import { AuthService } from '../AuthService/auth.service';
 import { environment } from '../../../environments/environment';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'content-Type': 'application/json'
-  })
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +12,13 @@ export class ActorsService {
   authenticated:boolean
   constructor(private http:HttpClient, private auth:AuthService) {
     this.authenticated = this.auth.authenticated
+  }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'content-Type': 'application/json',
+      'Authorization': `Bearer ${this.auth.accessToken}`
+    })
   }
 
   getActors():Observable<Actors>{
@@ -32,7 +33,7 @@ export class ActorsService {
     let data = this.http.post<Actors>(
       `${environment.api_url}/api/actors`,
       actor,
-      httpOptions
+      this.httpOptions
     )
     return data
   }
@@ -41,13 +42,13 @@ export class ActorsService {
     let data = this.http.patch<Actors>(
       `${environment.api_url}/api/actors/${actor.id}`,
       actor,
-      httpOptions
+      this.httpOptions
     )
     console.log(`data: ${JSON.stringify(data)}`)
     return data
   }
 
   deleteActor(aid):Observable<any>{
-    return this.http.delete(`${environment.api_url}/${aid}`, httpOptions)
+    return this.http.delete(`${environment.api_url}/${aid}`, this.httpOptions)
   }
 }
